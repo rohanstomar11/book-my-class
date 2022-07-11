@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import Home from './src/screen/home';
 
 const App  = () => {
 
@@ -24,6 +25,7 @@ const App  = () => {
             alignItems: 'center',
           }}>
             <Text style={{color: '#354354'}}>Let's Go</Text>
+            <Home />
         </View>
       </ScrollView>
     </SafeAreaView>
