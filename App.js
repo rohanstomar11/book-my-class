@@ -1,39 +1,25 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/screen/home';
+import Splash from './src/screen/splash';
 
 const App  = () => {
+
+  const Stack = createNativeStackNavigator();
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar barStyle='light-content' />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        contentContainerStyle={{flexGrow: 1}}>
-        <View
-          style={{
-            backgroundColor: '#FFFFFF',
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-            <Text style={{color: '#354354'}}>Let's Go</Text>
-            <Home />
-        </View>
-      </ScrollView>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false}}>
+            <Stack.Screen name="HomeScreen" component={Home} />
+            <Stack.Screen name="SplashScreen" component={Splash} />
+          </Stack.Navigator>
+        </NavigationContainer>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  
-});
 
 export default App;

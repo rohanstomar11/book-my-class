@@ -1,18 +1,18 @@
 import { StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
 import React from 'react';
 
-const HomeScreen = ({navigation}) => {
+const SplashScreen = ({navigation}) => {
   return (
     <ScrollView
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
       overScrollMode={'never'}>
-      <Text style={styles.heading}>Home Screen</Text>
+      <Text style={styles.heading}>Splash Screen</Text>
       <TouchableOpacity
         style={styles.button}
         activeOpacity={0.8}
-        onPress={() => {navigation.navigate('SplashScreen')}}>
-          <Text style={styles.buttonText}>Click Here</Text>
+        onPress={() => {navigation.goBack()}}>
+          <Text style={styles.buttonText}>Go Back</Text>
       </TouchableOpacity>
     </ScrollView>
   )
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HomeScreen;
+export default SplashScreen;
