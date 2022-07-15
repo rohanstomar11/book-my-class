@@ -5,10 +5,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/screen/home';
 import Splash from './src/screen/splash';
 
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({ 
+  dsn: 'https://8c00cf1b963443198cfc64c50e6fdc4a@o1320681.ingest.sentry.io/6576956',
+  tracesSampleRate: 1.0, 
+});
+
+
 const App  = () => {
 
   const Stack = createNativeStackNavigator();
-
+  
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar barStyle='light-content' />
@@ -22,4 +30,4 @@ const App  = () => {
   );
 };
 
-export default App;
+export default Sentry.wrap(App);
