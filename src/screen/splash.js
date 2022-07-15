@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -6,16 +6,19 @@ const SplashScreen = ({navigation}) => {
   return (
     <ScrollView
       contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-      overScrollMode={'never'}>
+      showsVerticalScrollIndicator={false}>
       <Text style={styles.heading}>Splash Screen</Text>
       <TouchableOpacity
         style={styles.button}
         activeOpacity={0.8}
         onPress={() => {navigation.goBack()}}>
-        <Icon name='arrowleft' size={24} color={'#F0FEFE'} />
+        <Icon name='arrowleft' size={24} color={'#F0F0F0'} />
         <Text style={styles.buttonText}>Go Back</Text>
       </TouchableOpacity>
+      <StatusBar
+        backgroundColor={'#F0F0F0'}
+        barStyle="dark-content"
+      />
     </ScrollView>
   );
 };
@@ -26,6 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#F0F0F0'
   },
   heading: {
     color: '#3036D6',
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
     elevation: 12,
   },
   buttonText: {
-    color: '#F0FEFE',
+    color: '#F0F0F0',
     fontSize: 20,
     fontWeight: '600',
     marginLeft: 10,

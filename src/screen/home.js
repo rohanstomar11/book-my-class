@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -6,16 +6,19 @@ const HomeScreen = ({navigation}) => {
   return (
     <ScrollView
       contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-      overScrollMode={'never'}>
+      showsVerticalScrollIndicator={false}>
       <Text style={styles.heading}>Home Screen</Text>
       <TouchableOpacity
         style={styles.button}
         activeOpacity={0.8}
         onPress={() => {navigation.navigate('SplashScreen')}}>
           <Text style={styles.buttonText}>Click Here</Text>
-          <Icon name='arrowright' size={24} color={'#F0FEFE'} />
+          <Icon name='arrowright' size={24} color={'#F0F0F0'} />
       </TouchableOpacity>
+      <StatusBar
+        backgroundColor={'#F0F0F0'}
+        barStyle="dark-content"
+      />
     </ScrollView>
   );
 };
@@ -26,6 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#F0F0F0'
   },
   heading: {
     color: '#3036D6',
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
     elevation: 12,
   },
   buttonText: {
-    color: '#F0FEFE',
+    color: '#F0F0F0',
     fontSize: 20,
     fontWeight: '600',
     marginRight: 10,
