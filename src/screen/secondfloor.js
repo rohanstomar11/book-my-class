@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
+import Zoomable from '../component/zoomable';
 
 export default function SecondFloor() {
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>FirstFloor</Text>
+      <Zoomable/>
     </View>
   );
 }
@@ -14,6 +15,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#01B8A4',
+    backgroundColor: '#fffaf0',
   },
 });
+

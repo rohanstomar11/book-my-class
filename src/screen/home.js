@@ -61,19 +61,19 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ecf0f1',
-    paddingTop: 30,
+    backgroundColor: '#fff',
+    paddingTop: 0,
   },
   tabbar: {
-    backgroundColor: '#3f51b5',
+    backgroundColor: '#1811DE',
   },
   tab: {
     width: 120,
   },
   indicator: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fdf5e6',
   },
   label: {
-    fontWeight: '400',
+    fontWeight: '600',
   },
 });

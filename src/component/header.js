@@ -12,9 +12,7 @@ export default function Header({navigation}) {
         }}>
         <Image
           style={styles.userImg}
-          source={{
-            uri: 'https://reactnative.dev/img/tiny_logo.png',
-          }}
+          source={require('../assets/college_logo.jpg')}
         />
       </TouchableOpacity>
     </View>
@@ -27,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
-    backgroundColor: '#0000cd',
+    backgroundColor: '#1811DE',
     paddingHorizontal: 20,
     width: '100%'
   },
@@ -38,9 +36,9 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   userImg: {
-    width: 50,
+    width: 60,
     height: 50,
-    borderRadius: 50,
+    borderRadius: 30,
     borderWidth: 3,
     borderColor: '#000000`',
   },
