@@ -1,16 +1,17 @@
 import { TouchableOpacity,Text,StyleSheet, View } from "react-native";
 import React, { useState } from 'react';
 
-export default function ClassRoom({ classroomnum }) {
+export default function ClassRoom({ classroomnum , booked = false}) {
   const [selected,setSelected]= useState(false);
   
     return(
-      <TouchableOpacity style={[styles.classContainer,{backgroundColor: selected ? '#000' : '#FFF'}]} 
-      activeOpacity={0.2} 
+      <TouchableOpacity style={[styles.classContainer,{backgroundColor: booked ? '#FF0101': selected ? '#01FF0D' : '#FFF'}]} 
+      activeOpacity={0.75} 
       onPress={()=>{
         setSelected(!selected);
         console.log('Booked');
-      }}>
+      }}
+      disabled={booked}>
       <Text style={styles.roomNumText}>
         { classroomnum }
       </Text>

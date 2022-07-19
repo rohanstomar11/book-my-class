@@ -17,12 +17,12 @@ export default function Zoomable() {
                     {/* Horizontal class section
                        First  horizontal class row */}
                     <View style={{ flexDirection: "row" }}>
-                        <ClassRoom classroomnum={'001'} />
+                        <ClassRoom classroomnum={'001'}  booked='True' />
                         <ClassRoom classroomnum={'002'} />
                         <ClassRoom classroomnum={'003'} />
                         <ClassRoom classroomnum={'004'} />
                         <ClassRoom classroomnum={'005'} />
-                        <ClassRoom classroomnum={'006'} />
+                        <ClassRoom classroomnum={'006'} booked = 'True' />
                     </View>
 
                     {/* Second horizontal class row */}
