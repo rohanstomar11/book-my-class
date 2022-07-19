@@ -2,22 +2,14 @@ import { TouchableOpacity,Text,StyleSheet, View } from "react-native";
 import React, { useState } from 'react';
 
 export default function ClassRoom({ classroomnum }) {
-  const [bgColor,setBgColor]= useState('white');
-  
-  const changeColor = () => {
-    if ( bgColor === 'white' ){
-      setBgColor('green');
-    }else{
-      setBgColor('white');
-    }
-  };
+  const [selected,setSelected]= useState(false);
   
     return(
-      <TouchableOpacity style={[styles.classContainer,{backgroundColor:'${bgColor}'}]} 
+      <TouchableOpacity style={[styles.classContainer,{backgroundColor: selected ? '#000' : '#FFF'}]} 
       activeOpacity={0.2} 
       onPress={()=>{
-        changeColor();
-        console.log('Booked')
+        setSelected(!selected);
+        console.log('Booked');
       }}>
       <Text style={styles.roomNumText}>
         { classroomnum }
@@ -30,7 +22,6 @@ export default function ClassRoom({ classroomnum }) {
 const styles = StyleSheet.create({
 
   classContainer:{
-    backgroundColor:'white',
     justifyContent:'center',
     alignItems:'center',
     width:60,
