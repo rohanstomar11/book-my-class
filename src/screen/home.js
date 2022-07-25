@@ -1,57 +1,79 @@
-import { StyleSheet, Text, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
-import React from 'react';
-import Icon from 'react-native-vector-icons/AntDesign';
+import React, { useState } from 'react';
+import { Text, View, useWindowDimensions, StyleSheet } from 'react-native';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import GroundFloor from './Groundfloor';
+import FirstFloor from './firstfloor'; 
+import SecondFloor from './secondfloor';
+import ThirdFloor from './thirdfloor';
+import FouthFloor from './fourthfloor';
+import FifthFloor from './fifthfloor';
+import Header from '../component/header';
 
-const HomeScreen = ({navigation}) => {
-  return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}>
-      <Text style={styles.heading}>Home Screen</Text>
-      <TouchableOpacity
-        style={styles.button}
-        activeOpacity={0.8}
-        onPress={() => {navigation.navigate('SplashScreen')}}>
-          <Text style={styles.buttonText}>Click Here</Text>
-          <Icon name='arrowright' size={24} color={'#F0F0F0'} />
-      </TouchableOpacity>
-      <StatusBar
-        backgroundColor={'#F0F0F0'}
-        barStyle="dark-content"
-      />
-    </ScrollView>
+const renderScene = SceneMap({
+  ground: GroundFloor,
+  first: FirstFloor,
+  second: SecondFloor,
+  third: ThirdFloor,
+  forth: FouthFloor,
+  fifth: FifthFloor,
+});
+
+export default function HomeScreen({ navigation }) {
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: 'ground', title: 'G Floor' },
+    { key: 'first', title: '1st Floor' },
+    { key: 'second', title: '2nd Floor' },
+    { key: 'third', title: '3rd Floor' },
+    { key: 'forth', title: '4th Floor' },
+    { key: 'fifth', title: '5th Floor' },
+  ]);
+
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      scrollEnabled
+      indicatorStyle={styles.indicator}
+      style={styles.tabbar}
+      tabStyle={styles.tab}
+      labelStyle={styles.label}
+    />
   );
-};
+
+  return (
+    <>
+      <View style={styles.container}>
+        <Header navigation={navigation} />
+      </View>
+      <TabView
+        swipeEnabled={false}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        renderTabBar={renderTabBar}
+      />
+    </>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#F0F0F0'
+    backgroundColor: '#fff',
+    paddingTop: 0,
   },
-  heading: {
-    color: '#3036D6',
-    fontSize: 40,
-    fontWeight: '800',
+  tabbar: {
+    backgroundColor: '#1811DE',
   },
-  button: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    backgroundColor: '#3036D6',
-    paddingVertical: 10,
-    paddingHorizontal: 40,
-    borderRadius: 12,
-    elevation: 12,
+  tab: {
+    width: 120,
   },
-  buttonText: {
-    color: '#F0F0F0',
-    fontSize: 20,
+  indicator: {
+    backgroundColor: '#fdf5e6',
+  },
+  label: {
     fontWeight: '600',
-    marginRight: 10,
-  }
+  },
 });
-
-export default HomeScreen;
