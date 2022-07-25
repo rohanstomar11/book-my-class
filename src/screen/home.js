@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Text, View, useWindowDimensions, StyleSheet } from 'react-native';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import React, {useState} from 'react';
+import {View, useWindowDimensions, StyleSheet} from 'react-native';
+import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import GroundFloor from './Groundfloor';
-import FirstFloor from './firstfloor'; 
+import FirstFloor from './firstfloor';
 import SecondFloor from './secondfloor';
 import ThirdFloor from './thirdfloor';
 import FouthFloor from './fourthfloor';
@@ -18,20 +18,20 @@ const renderScene = SceneMap({
   fifth: FifthFloor,
 });
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({navigation}) {
   const layout = useWindowDimensions();
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: 'ground', title: 'G Floor' },
-    { key: 'first', title: '1st Floor' },
-    { key: 'second', title: '2nd Floor' },
-    { key: 'third', title: '3rd Floor' },
-    { key: 'forth', title: '4th Floor' },
-    { key: 'fifth', title: '5th Floor' },
+    {key: 'ground', title: 'G Floor'},
+    {key: 'first', title: '1st Floor'},
+    {key: 'second', title: '2nd Floor'},
+    {key: 'third', title: '3rd Floor'},
+    {key: 'forth', title: '4th Floor'},
+    {key: 'fifth', title: '5th Floor'},
   ]);
 
-  const renderTabBar = (props) => (
+  const renderTabBar = props => (
     <TabBar
       {...props}
       scrollEnabled
@@ -49,10 +49,10 @@ export default function HomeScreen({ navigation }) {
       </View>
       <TabView
         swipeEnabled={false}
-        navigationState={{ index, routes }}
+        navigationState={{index, routes}}
         renderScene={renderScene}
         onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
+        initialLayout={{width: layout.width}}
         renderTabBar={renderTabBar}
       />
     </>

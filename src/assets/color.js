@@ -1,12 +1,3 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+export default COLORS =[
 
-const Color = () => {
-  return (
-    <View>
-      <Text>Color</Text>
-    </View>
-  )
-}
-
-export default Color
+];

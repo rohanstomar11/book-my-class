@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Zoomable from '../component/zoomable';
 
 export default function FifthFloor() {
   return (
     <View style={styles.container}>
-      <Zoomable/>
+      <Zoomable />
     </View>
   );
 }
