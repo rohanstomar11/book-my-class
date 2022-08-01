@@ -10,10 +10,7 @@ export default function Header({navigation}) {
         onPress={() => {
           navigation.navigate('UserProfileScreen');
         }}>
-        <Image
-          style={styles.userImg}
-          source={require('../assets/college_logo.jpg')}
-        />
+        <Image style={styles.userImg} source={require('../assets/logo.png')} />
       </TouchableOpacity>
     </View>
   );
