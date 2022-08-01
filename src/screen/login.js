@@ -26,7 +26,7 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
         const {height} = useWindowDimensions();
     return(
-            <View style={styles.container}>
+            <ScrollView contentContainerStyle={styles.container}>
 
             <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode='contain'/>
 
@@ -58,7 +58,7 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth'
             <Text style={styles.btntext}>Login</Text>
         </TouchableOpacity>
        
-        </View>
+        </ScrollView>
     );
 };
 
