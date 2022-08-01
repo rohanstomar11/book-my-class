@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         background:'#F9FBFE',
-        padding:15
+        padding:15,
+        flexGrow:1
         
     },
 
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
 
     btn:{
        width:'100%',
-       height:50,
+       height:45,
        marginTop:50,
        borderRadius:12,
        backgroundColor:'#355EEC',
