@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-vector-icons/Icon';
 import logo from '../assets/logo.png';
-import auth from '@react-native-firebase/auth'
+import auth from '@react-native-firebase/auth';
 
-const Login = ({navigation}) => {
-  const [userName, setUserName] = useState();
+function Login({ navigation }) {
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
   const submit = () => {
@@ -43,30 +43,12 @@ const Login = ({navigation}) => {
 
 
 
-
-
-//   const signUp = async (userName,password) => {
-//     if(!userName || !password){
-//       Alert.alert('Error', 'Please enter all fileds' )
-//     }
-
-//     try {
-//       await auth().signInWithEmailAndPassword(userName, password);
-//       console.log('User account created & signed in!');
-//       Alert.alert(`Redirecting to Home page...`);
-//       navigation.navigate('HomeScreen');
-//     } catch (err) {
-//       return Alert.alert(err.code, err.message);
-//     }
-// }
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image
         source={require('../assets/logo.png')}
         style={styles.logo}
-        resizeMode="contain"
-      />
+        resizeMode="contain" />
 
       <Text style={styles.logocontent}>Book My Class</Text>
 
@@ -76,8 +58,7 @@ const Login = ({navigation}) => {
         placeholderTextColor={'grey'}
         autoCapitalize="none"
         value={userName}
-        onChangeText={actualdata => setUserName(actualdata)}
-      />
+        onChangeText={actualdata => setUserName(actualdata)} />
 
       <TextInput
         style={styles.input}
@@ -85,16 +66,15 @@ const Login = ({navigation}) => {
         placeholderTextColor={'grey'}
         secureTextEntry={true}
         value={password}
-        onChangeText={actualdata => setPassword(actualdata)}
-      />
-      <Text>Forgot Password ? </Text>
+        onChangeText={actualdata => setPassword(actualdata)} />
+      <Text>Forgot Password?</Text>
 
       <TouchableOpacity style={styles.btn} onPress={() => submit()}>
         <Text style={styles.btntext}>Login</Text>
       </TouchableOpacity>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,14 +1,22 @@
 import * as React from 'react';
 import {Text, View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 export default function Header({navigation}) {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>BookMyClass</Text>
       <TouchableOpacity
-        activeOpacity={1}
+        activeOpacity={0.8}
         onPress={() => {
-          navigation.navigate('UserProfileScreen');
+          // navigation.navigate('UserProfileScreen');
+          auth()
+            .signOut()
+            .then(() => {
+              Alert.alert('Redirecting to Login page...');
+              navigation.navigate('LoginPage');
+            },(error)=>{console.error(error)});
+            
         }}>
         <Image style={styles.userImg} source={require('../assets/logo.png')} />
       </TouchableOpacity>
