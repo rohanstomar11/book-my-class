@@ -11,23 +11,54 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-vector-icons/Icon';
 import logo from '../assets/logo.png';
-import CustomInput from '../component/custominput';
+import auth from '@react-native-firebase/auth'
+
 const Login = ({navigation}) => {
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState();
   const [password, setPassword] = useState('');
 
-  // console.log(userName,password)
-
   const submit = () => {
-    //
+    if (userName === '' && password === '') {
+      auth()
+        .signInWithEmailAndPassword(userName, password)
+        .then(() => {
+          console.log('User account created & signed in!');
+          Alert.alert(`Redirecting to Home page...`);
+          navigation.navigate('HomeScreen');
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+          }
 
-    if (userName === 'admin' && password === 'pass') {
-      Alert.alert(`Redirecting to Home page...`);
-      navigation.navigate('HomeScreen');
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+          console.error(error);
+        });
     } else {
       Alert.alert('Username and password is not correct');
     }
   };
+
+
+
+
+
+//   const signUp = async (userName,password) => {
+//     if(!userName || !password){
+//       Alert.alert('Error', 'Please enter all fileds' )
+//     }
+
+//     try {
+//       await auth().signInWithEmailAndPassword(userName, password);
+//       console.log('User account created & signed in!');
+//       Alert.alert(`Redirecting to Home page...`);
+//       navigation.navigate('HomeScreen');
+//     } catch (err) {
+//       return Alert.alert(err.code, err.message);
+//     }
+// }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
