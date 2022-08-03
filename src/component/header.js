@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {Text, View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import auth from '@react-native-firebase/auth';
 
 export default function Header({navigation}) {
@@ -12,11 +19,15 @@ export default function Header({navigation}) {
           // navigation.navigate('UserProfileScreen');
           auth()
             .signOut()
-            .then(() => {
-              Alert.alert('Redirecting to Login page...');
-              navigation.navigate('LoginPage');
-            },(error)=>{console.error(error)});
-            
+            .then(
+              () => {
+                Alert.alert('Redirecting to Login page...');
+                navigation.navigate('LoginScreen');
+              },
+              error => {
+                console.error(error);
+              },
+            );
         }}>
         <Image style={styles.userImg} source={require('../assets/logo.png')} />
       </TouchableOpacity>
