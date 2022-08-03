@@ -18,7 +18,7 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
 
   const submit = () => {
-    if (userName === '' && password === '') {
+    if (!(userName === '' && password === '')) {
       auth()
         .signInWithEmailAndPassword(userName, password)
         .then(() => {
