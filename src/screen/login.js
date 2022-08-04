@@ -2,18 +2,14 @@ import React, {useState} from 'react';
 import {
   ScrollView,
   TextInput,
-  View,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
-import {Icon} from 'react-native-vector-icons/Icon';
-import logo from '../assets/logo.png';
 import auth from '@react-native-firebase/auth';
 
-function Login({ navigation }) {
+const Login = ({navigation}) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,8 +19,7 @@ function Login({ navigation }) {
         .signInWithEmailAndPassword(userName, password)
         .then(() => {
           console.log('User account created & signed in!');
-          Alert.alert(`Redirecting to Home page...`);
-          navigation.navigate('HomeScreen');
+          navigation.replace('HomeScreen');
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
@@ -37,18 +32,17 @@ function Login({ navigation }) {
           console.error(error);
         });
     } else {
-      Alert.alert('Username and password is not correct');
+      //something to initimidate user to fill up id an password
     }
   };
-
-
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image
-        source={require('../assets/logo.png')}
+        source={require('../assets/images/logo.png')}
         style={styles.logo}
-        resizeMode="contain" />
+        resizeMode="contain"
+      />
 
       <Text style={styles.logocontent}>Book My Class</Text>
 
@@ -58,7 +52,8 @@ function Login({ navigation }) {
         placeholderTextColor={'grey'}
         autoCapitalize="none"
         value={userName}
-        onChangeText={actualdata => setUserName(actualdata)} />
+        onChangeText={actualdata => setUserName(actualdata)}
+      />
 
       <TextInput
         style={styles.input}
@@ -66,7 +61,8 @@ function Login({ navigation }) {
         placeholderTextColor={'grey'}
         secureTextEntry={true}
         value={password}
-        onChangeText={actualdata => setPassword(actualdata)} />
+        onChangeText={actualdata => setPassword(actualdata)}
+      />
       <Text>Forgot Password?</Text>
 
       <TouchableOpacity style={styles.btn} onPress={() => submit()}>
@@ -74,7 +70,7 @@ function Login({ navigation }) {
       </TouchableOpacity>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

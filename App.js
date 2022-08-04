@@ -15,10 +15,10 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{headerShown: false}}
-          initialRouteName="LoginScreen">
+          initialRouteName="SplashScreen">
+          <Stack.Screen name="SplashScreen" component={Splash} />
           <Stack.Screen name="LoginScreen" component={Login} />
           <Stack.Screen name="HomeScreen" component={Home} />
-          <Stack.Screen name="SplashScreen" component={Splash} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

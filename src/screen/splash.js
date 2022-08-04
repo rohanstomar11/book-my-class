@@ -1,28 +1,34 @@
-import {
-  StyleSheet,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
-import React from 'react';
-import Icon from 'react-native-vector-icons/AntDesign';
+import {StyleSheet, Text, ScrollView, StatusBar, Image} from 'react-native';
+import React, {useEffect} from 'react';
+import auth from '@react-native-firebase/auth';
 
 const SplashScreen = ({navigation}) => {
+  useEffect(() => {
+    timeoutHelper(() => {
+      const unsubscribe = auth().onAuthStateChanged(user => {
+        if (user) {
+          navigation.replace('HomeScreen');
+        } else {
+          navigation.replace('LoginScreen');
+        }
+        unsubscribe();
+      });
+    });
+  });
+
+  const timeoutHelper = action => {
+    const timer = setTimeout(() => {
+      action();
+    }, 1500);
+    return () => clearTimeout(timer);
+  };
+
   return (
     <ScrollView
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}>
-      <Text style={styles.heading}>Splash Screen</Text>
-      <TouchableOpacity
-        style={styles.button}
-        activeOpacity={0.8}
-        onPress={() => {
-          navigation.goBack();
-        }}>
-        <Icon name="arrowleft" size={24} color={'#F0F0F0'} />
-        <Text style={styles.buttonText}>Go Back</Text>
-      </TouchableOpacity>
+      <Image source={require('../assets/images/logo.png')} />
+      <Text style={styles.heading}>Book My Class</Text>
       <StatusBar backgroundColor={'#F0F0F0'} barStyle="dark-content" />
     </ScrollView>
   );
@@ -34,28 +40,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#F9FBFE',
   },
   heading: {
-    color: '#3036D6',
+    color: '#2d6cdf',
     fontSize: 40,
     fontWeight: '800',
-  },
-  button: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    backgroundColor: '#3036D6',
-    paddingVertical: 10,
-    paddingHorizontal: 40,
-    borderRadius: 12,
-    elevation: 12,
-  },
-  buttonText: {
-    color: '#F0F0F0',
-    fontSize: 20,
-    fontWeight: '600',
-    marginLeft: 10,
   },
 });
 
