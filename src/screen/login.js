@@ -12,6 +12,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import GradientButton from '../component/gradientbutton';
 import {FONTS} from '../assets/fontFamily';
+import {COLORS} from '../assets/color';
 
 const Login = ({navigation}) => {
   const [userName, setUserName] = useState('');
@@ -74,7 +75,7 @@ const Login = ({navigation}) => {
           <GradientButton text={'LOGIN'} onPress={submit} />
         </View>
       </ScrollView>
-      <StatusBar backgroundColor={'#F9FBFE'} barStyle="dark-content" />
+      <StatusBar backgroundColor={COLORS.background} barStyle="dark-content" />
     </SafeAreaView>
   );
 };
@@ -82,24 +83,24 @@ const Login = ({navigation}) => {
 const styles = StyleSheet.create({
   safearea: {
     flex: 1,
-    background: '#F9FBFE',
+    background: COLORS.background,
   },
   container: {
     alignItems: 'center',
     flexGrow: 1,
-    background: '#F9FBFE',
+    background: COLORS.background,
   },
   logo: {
     marginTop: '20%',
   },
   title: {
     fontSize: 32,
-    color: '#354354',
+    color: COLORS.primary,
     marginTop: '10%',
     fontFamily: FONTS.Bold,
   },
   input: {
-    backgroundColor: '#FEFEFE',
+    backgroundColor: COLORS.white,
     width: '90%',
     borderColor: 'grey',
     borderWidth: 1,
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     marginTop: '5%',
   },
   forgotText: {
-    color: '#354354',
+    color: COLORS.text,
     marginTop: '5%',
     fontFamily: FONTS.Regular,
   },

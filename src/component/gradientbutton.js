@@ -2,6 +2,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {FONTS} from '../assets/fontFamily';
+import {COLORS} from '../assets/color';
 
 const GradientButton = ({onPress, colors, text}) => {
   return (
@@ -13,7 +14,7 @@ const GradientButton = ({onPress, colors, text}) => {
       style={styles.container}>
       <LinearGradient
         style={styles.gradientContainer}
-        colors={colors || ['#2d6cdf', '#6758d8']}
+        colors={colors || [COLORS.primary, COLORS.secondary]}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         <Text style={styles.text}>{text}</Text>
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   text: {
-    color: '#FEFEFE',
+    color: COLORS.white,
     fontSize: 20,
     fontFamily: FONTS.Bold,
     letterSpacing: 2,

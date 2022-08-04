@@ -1,19 +1,21 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, StatusBar, SafeAreaView} from 'react-native';
+import {COLORS} from '../assets/color';
 import Header from '../component/header';
 
 const HomeScreen = ({navigation}) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header navigation={navigation} />
-    </View>
+      <StatusBar backgroundColor={COLORS.primary} barStyle="light-content" />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F9FBFE',
-    paddingTop: 0,
+    backgroundColor: COLORS.background,
+    flex: 1,
   },
 });
 

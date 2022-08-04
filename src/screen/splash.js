@@ -1,6 +1,7 @@
 import {StyleSheet, Text, View, StatusBar, Image} from 'react-native';
 import React, {useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
+import {COLORS} from '../assets/color';
 
 const SplashScreen = ({navigation}) => {
   useEffect(() => {
@@ -27,7 +28,7 @@ const SplashScreen = ({navigation}) => {
     <View style={styles.container}>
       <Image source={require('../assets/images/logo.png')} />
       <Text style={styles.heading}>Book My Class</Text>
-      <StatusBar backgroundColor={'#F9FBfE'} barStyle="dark-content" />
+      <StatusBar backgroundColor={COLORS.background} barStyle="dark-content" />
     </View>
   );
 };
@@ -38,10 +39,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#F9FBFE',
+    backgroundColor: COLORS.background,
   },
   heading: {
-    color: '#2D6CDF',
+    color: COLORS.primary,
     fontSize: 40,
     fontWeight: '800',
   },
