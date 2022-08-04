@@ -5,9 +5,12 @@ import {
   Image,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  View,
+  StatusBar,
+  SafeAreaView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import GradientButton from '../component/gradientbutton';
 
 const Login = ({navigation}) => {
   const [userName, setUserName] = useState('');
@@ -37,85 +40,82 @@ const Login = ({navigation}) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image
-        source={require('../assets/images/logo.png')}
-        style={styles.logo}
-        resizeMode="contain"
-      />
-
-      <Text style={styles.logocontent}>Book My Class</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor={'grey'}
-        autoCapitalize="none"
-        value={userName}
-        onChangeText={actualdata => setUserName(actualdata)}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor={'grey'}
-        secureTextEntry={true}
-        value={password}
-        onChangeText={actualdata => setPassword(actualdata)}
-      />
-      <Text>Forgot Password?</Text>
-
-      <TouchableOpacity style={styles.btn} onPress={() => submit()}>
-        <Text style={styles.btntext}>Login</Text>
-      </TouchableOpacity>
-    </ScrollView>
+    <SafeAreaView style={styles.safearea}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        alwaysBounceVertical={false}
+        overScrollMode={'never'}
+        contentContainerStyle={styles.container}>
+        <Image
+          source={require('../assets/images/logo.png')}
+          style={styles.logo}
+          resizeMode="stretch"
+        />
+        <Text style={styles.title}>Book My Class</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor={'grey'}
+          autoCapitalize="none"
+          value={userName}
+          onChangeText={actualdata => setUserName(actualdata)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor={'grey'}
+          secureTextEntry={true}
+          value={password}
+          onChangeText={actualdata => setPassword(actualdata)}
+        />
+        <Text style={styles.forgotText}>Forgot Password?</Text>
+        <View style={styles.btnContainer}>
+          <GradientButton text={'LOGIN'} onPress={submit} />
+        </View>
+      </ScrollView>
+      <StatusBar backgroundColor={'#F9FBfE'} barStyle="dark-content" />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safearea: {
+    flex: 1,
+  },
   container: {
-    justifyContent: 'center',
     alignItems: 'center',
     background: '#F9FBFE',
-    padding: 15,
     flexGrow: 1,
   },
-
-  logocontent: {
+  logo: {
+    marginTop: '20%',
+  },
+  title: {
     fontWeight: '700',
     fontSize: 32,
     color: '#354354',
-    paddingBottom: 10,
-  },
-  logo: {
-    height: '45%',
-    width: '60%',
-    maxHeight: 300,
-    justifyContent: 'center',
+    marginTop: '10%',
   },
   input: {
     backgroundColor: '#FEFEFE',
-    width: '95%',
-    borderColor: '#e8e8e8',
+    width: '90%',
+    borderColor: 'grey',
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginVertical: 5,
-  },
-  btn: {
-    width: '100%',
-    height: 45,
-    marginTop: 50,
     borderRadius: 12,
-    backgroundColor: '#355EEC',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 16,
+    marginHorizontal: 16,
+    marginTop: '5%',
   },
-  btntext: {
-    fontFamily: 'Poppins',
-    fontWeight: '700',
-    fontSize: 20,
-    color: 'white',
+  forgotText: {
+    color: '#354354',
+    marginTop: '5%',
+  },
+  btnContainer: {
+    width: '100%',
+    paddingHorizontal: 16,
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingBottom: '10%',
   },
 });
 

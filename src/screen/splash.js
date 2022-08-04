@@ -1,4 +1,4 @@
-import {StyleSheet, Text, ScrollView, StatusBar, Image} from 'react-native';
+import {StyleSheet, Text, View, StatusBar, Image} from 'react-native';
 import React, {useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 
@@ -24,13 +24,11 @@ const SplashScreen = ({navigation}) => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}>
+    <View style={styles.container}>
       <Image source={require('../assets/images/logo.png')} />
       <Text style={styles.heading}>Book My Class</Text>
-      <StatusBar backgroundColor={'#F0F0F0'} barStyle="dark-content" />
-    </ScrollView>
+      <StatusBar backgroundColor={'#F9FBfE'} barStyle="dark-content" />
+    </View>
   );
 };
 
@@ -43,7 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9FBFE',
   },
   heading: {
-    color: '#2d6cdf',
+    color: '#2D6CDF',
     fontSize: 40,
     fontWeight: '800',
   },

@@ -11,7 +11,6 @@ const App = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <StatusBar barStyle="light-content" />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{headerShown: false}}
@@ -21,6 +20,7 @@ const App = () => {
           <Stack.Screen name="HomeScreen" component={Home} />
         </Stack.Navigator>
       </NavigationContainer>
+      <StatusBar barStyle="light-content" />
     </SafeAreaView>
   );
 };
