@@ -10,7 +10,11 @@
     "lint": "eslint .",
     "clean-install": "npm install --legacy-peer-deps",
     "clean": "cd android && ./gradlew clean && cd ..",
-    "release": "react-native run-android --variant=release"
+    "android-clean-install": "rm -rf node_modules && rm -rf package-lock.json && npm install --legacy-peer-deps",
+    "start-cache-clear": "react-native start --reset-cache",
+    "android-clean": "cd android && ./gradlew clean && cd ..",
+    "android-release": "react-native run-android --variant=release",
+    "android-bundle-release": "cd android && ./gradlew bundleRelease && cd .."
   },
   "dependencies": {
     "@dudigital/react-native-zoomable-view": "^1.1.4",
