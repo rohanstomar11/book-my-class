@@ -19,26 +19,21 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
 
   const submit = () => {
-    if (!(userName === '' && password === '')) {
-      auth()
-        .signInWithEmailAndPassword(userName, password)
-        .then(() => {
-          console.log('User account created & signed in!');
-          navigation.replace('HomeScreen');
-        })
-        .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
-          }
-
-          if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
-          }
-          console.error(error);
-        });
-    } else {
-      //something to initimidate user to fill up id an password
+    if (userName === '') {
+      return;
     }
+    if (password === '') {
+      return;
+    }
+    auth()
+      .signInWithEmailAndPassword(userName, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+        navigation.replace('HomeScreen');
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   return (
