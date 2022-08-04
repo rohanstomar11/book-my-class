@@ -2,113 +2,119 @@ import React, {useState} from 'react';
 import {
   ScrollView,
   TextInput,
-  View,
   Image,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  Alert,
+  View,
+  StatusBar,
+  SafeAreaView,
 } from 'react-native';
-import {Icon} from 'react-native-vector-icons/Icon';
-import logo from '../assets/logo.png';
-import CustomInput from '../component/custominput';
+import auth from '@react-native-firebase/auth';
+import GradientButton from '../component/gradientbutton';
+import {FONTS} from '../assets/fontFamily';
+import {COLORS} from '../assets/color';
+
 const Login = ({navigation}) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
-  // console.log(userName,password)
-
   const submit = () => {
-    //
-
-    if (userName === 'admin' && password === 'pass') {
-      Alert.alert(`Redirecting to Home page...`);
-      navigation.navigate('HomeScreen');
-    } else {
-      Alert.alert('Username and password is not correct');
+    if (userName === '') {
+      return;
     }
+    if (password === '') {
+      return;
+    }
+    auth()
+      .signInWithEmailAndPassword(userName, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+        navigation.replace('HomeScreen');
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image
-        source={require('../assets/logo.png')}
-        style={styles.logo}
-        resizeMode="contain"
-      />
-
-      <Text style={styles.logocontent}>Book My Class</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor={'grey'}
-        autoCapitalize="none"
-        value={userName}
-        onChangeText={actualdata => setUserName(actualdata)}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor={'grey'}
-        secureTextEntry={true}
-        value={password}
-        onChangeText={actualdata => setPassword(actualdata)}
-      />
-      <Text>Forgot Password ? </Text>
-
-      <TouchableOpacity style={styles.btn} onPress={() => submit()}>
-        <Text style={styles.btntext}>Login</Text>
-      </TouchableOpacity>
-    </ScrollView>
+    <SafeAreaView style={styles.safearea}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        alwaysBounceVertical={false}
+        overScrollMode={'never'}
+        contentContainerStyle={styles.container}>
+        <Image
+          source={require('../assets/images/logo.png')}
+          style={styles.logo}
+          resizeMode="stretch"
+        />
+        <Text style={styles.title}>Book My Class</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor={'grey'}
+          autoCapitalize="none"
+          value={userName}
+          onChangeText={actualdata => setUserName(actualdata)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor={'grey'}
+          secureTextEntry={true}
+          value={password}
+          onChangeText={actualdata => setPassword(actualdata)}
+        />
+        <Text style={styles.forgotText}>Forgot Password?</Text>
+        <View style={styles.btnContainer}>
+          <GradientButton text={'LOGIN'} onPress={submit} />
+        </View>
+      </ScrollView>
+      <StatusBar backgroundColor={COLORS.background} barStyle="dark-content" />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    background: '#F9FBFE',
-    padding: 15,
-    flexGrow: 1,
+  safearea: {
+    flex: 1,
+    background: COLORS.background,
   },
-
-  logocontent: {
-    fontWeight: '700',
-    fontSize: 32,
-    color: '#354354',
-    paddingBottom: 10,
+  container: {
+    alignItems: 'center',
+    flexGrow: 1,
+    background: COLORS.background,
   },
   logo: {
-    height: '45%',
-    width: '60%',
-    maxHeight: 300,
-    justifyContent: 'center',
+    marginTop: '20%',
+  },
+  title: {
+    fontSize: 32,
+    color: COLORS.primary,
+    marginTop: '10%',
+    fontFamily: FONTS.Bold,
   },
   input: {
-    backgroundColor: '#FEFEFE',
-    width: '95%',
-    borderColor: '#e8e8e8',
+    backgroundColor: COLORS.white,
+    width: '90%',
+    borderColor: 'grey',
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginVertical: 5,
-  },
-  btn: {
-    width: '100%',
-    height: 45,
-    marginTop: 50,
     borderRadius: 12,
-    backgroundColor: '#355EEC',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 16,
+    marginHorizontal: 16,
+    marginTop: '5%',
   },
-  btntext: {
-    fontFamily: 'Poppins',
-    fontWeight: '700',
-    fontSize: 20,
-    color: 'white',
+  forgotText: {
+    color: COLORS.text,
+    marginTop: '5%',
+    fontFamily: FONTS.Regular,
+  },
+  btnContainer: {
+    width: '100%',
+    paddingHorizontal: 16,
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingBottom: '10%',
   },
 });
 

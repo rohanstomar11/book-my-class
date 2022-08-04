@@ -11,16 +11,16 @@ const App = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <StatusBar barStyle="light-content" />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{headerShown: false}}
-          initialRouteName="Login">
-          <Stack.Screen name="Login page" component={Login} />
-          <Stack.Screen name="HomeScreen" component={Home} />
+          initialRouteName="SplashScreen">
           <Stack.Screen name="SplashScreen" component={Splash} />
+          <Stack.Screen name="LoginScreen" component={Login} />
+          <Stack.Screen name="HomeScreen" component={Home} />
         </Stack.Navigator>
       </NavigationContainer>
+      <StatusBar barStyle="light-content" />
     </SafeAreaView>
   );
 };
