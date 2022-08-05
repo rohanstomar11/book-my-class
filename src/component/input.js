@@ -51,7 +51,7 @@ const Input = ({
           <Icon5
             name={key ? 'eye-slash' : 'eye'}
             color={COLORS.primary}
-            size={20}
+            size={22}
           />
         </TouchableOpacity>
       )}
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   eye: {
     position: 'absolute',
-    right: 8,
+    right: 12,
   },
 });
 
