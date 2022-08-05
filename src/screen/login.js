@@ -63,7 +63,9 @@ const Login = ({navigation}) => {
             placeholder={'Password'}
             top={'5%'}
             icon={'lock'}
+            iconSize={32}
             hide={true}
+            extra={true}
           />
           <Text style={styles.forgotText}>Forgot Password?</Text>
         </View>

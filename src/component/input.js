@@ -9,11 +9,13 @@ const Input = ({
   state,
   setState,
   icon = 'user-o',
+  iconSize = 24,
   placeholder = '',
   keyboard = 'default',
   multiline = false,
   hide = false,
   top = 0,
+  extra = false,
 }) => {
   const [key, setKey] = useState(hide);
   const showPassword = () => {
@@ -30,8 +32,8 @@ const Input = ({
       ]}>
       <Icon
         name={icon}
-        size={24}
-        style={styles.negMargin}
+        size={iconSize}
+        style={(styles.negMargin, extra ? {marginLeft: '1%'} : {})}
         color={state === '' ? COLORS.hint : COLORS.primary}
       />
       <TextInput
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginLeft: '4%',
     fontSize: 14,
-    fontFamily: FONTS.Regular,
+    fontFamily: FONTS.Medium,
     color: COLORS.primary,
   },
   negMargin: {
