@@ -6,4 +6,5 @@ export const COLORS = {
   text: '#354354',
   red: '#D10000',
   green: '#32CD32',
+  hint: '#A4B3C5',
 };
