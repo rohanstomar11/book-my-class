@@ -5,8 +5,6 @@ import {COLORS} from '../assets/color';
 import Lottie from 'lottie-react-native';
 import {FONTS} from '../assets/fontFamily';
 
-
-
 const SplashScreen = ({navigation}) => {
   useEffect(() => {
     timeoutHelper(() => {
@@ -24,7 +22,7 @@ const SplashScreen = ({navigation}) => {
   const timeoutHelper = action => {
     const timer = setTimeout(() => {
       action();
-    }, 1500000);
+    }, 1700);
     return () => clearTimeout(timer);
   };
 
@@ -42,10 +40,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-  
-  
-    
-
     backgroundColor: COLORS.background,
   },
   heading: {
@@ -53,10 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontFamily: FONTS.Bold,
     marginTop: '60%',
-
   },
 });
 
 export default SplashScreen;
-
-
