@@ -2,6 +2,8 @@ import {StyleSheet, Text, View, StatusBar, Image} from 'react-native';
 import React, {useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import {COLORS} from '../assets/color';
+import Lottie from 'lottie-react-native';
+import {FONTS} from '../assets/fontFamily';
 
 const SplashScreen = ({navigation}) => {
   useEffect(() => {
@@ -20,13 +22,13 @@ const SplashScreen = ({navigation}) => {
   const timeoutHelper = action => {
     const timer = setTimeout(() => {
       action();
-    }, 1500);
+    }, 1700);
     return () => clearTimeout(timer);
   };
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/images/logo.png')} />
+      <Lottie source={require('../assets/lottie/booking.json')} autoPlay loop />
       <Text style={styles.heading}>Book My Class</Text>
       <StatusBar backgroundColor={COLORS.background} barStyle="dark-content" />
     </View>
@@ -35,16 +37,16 @@ const SplashScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    padding: 20,
     backgroundColor: COLORS.background,
   },
   heading: {
     color: COLORS.primary,
     fontSize: 40,
-    fontWeight: '800',
+    fontFamily: FONTS.Bold,
+    marginTop: '60%',
   },
 });
 
