@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   ScrollView,
-  TextInput,
   Image,
   StyleSheet,
   Text,
@@ -13,22 +12,22 @@ import auth from '@react-native-firebase/auth';
 import GradientButton from '../component/gradientbutton';
 import {FONTS} from '../assets/fontFamily';
 import {COLORS} from '../assets/color';
+import Input from '../component/input';
 
 const Login = ({navigation}) => {
-  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const submit = () => {
-    if (userName === '') {
+    if (email === '') {
       return;
     }
     if (password === '') {
       return;
     }
     auth()
-      .signInWithEmailAndPassword(userName, password)
+      .signInWithEmailAndPassword(email, password)
       .then(() => {
-        console.log('User account created & signed in!');
         navigation.replace('HomeScreen');
       })
       .catch(error => {
@@ -49,23 +48,27 @@ const Login = ({navigation}) => {
           resizeMode="stretch"
         />
         <Text style={styles.title}>Book My Class</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor={'grey'}
-          autoCapitalize="none"
-          value={userName}
-          onChangeText={actualdata => setUserName(actualdata)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor={'grey'}
-          secureTextEntry={true}
-          value={password}
-          onChangeText={actualdata => setPassword(actualdata)}
-        />
-        <Text style={styles.forgotText}>Forgot Password?</Text>
+        <View style={styles.inputContainer}>
+          <Input
+            state={email}
+            setState={setEmail}
+            placeholder={'Email'}
+            keyboard={'email-address'}
+            top={'5%'}
+            icon={'envelope-o'}
+          />
+          <Input
+            state={password}
+            setState={setPassword}
+            placeholder={'Password'}
+            top={'5%'}
+            icon={'lock'}
+            iconSize={32}
+            hide={true}
+            extra={true}
+          />
+          <Text style={styles.forgotText}>Forgot Password?</Text>
+        </View>
         <View style={styles.btnContainer}>
           <GradientButton text={'LOGIN'} onPress={submit} />
         </View>
@@ -94,20 +97,16 @@ const styles = StyleSheet.create({
     marginTop: '10%',
     fontFamily: FONTS.Bold,
   },
-  input: {
-    backgroundColor: COLORS.white,
-    width: '90%',
-    borderColor: 'grey',
-    borderWidth: 1,
-    borderRadius: 12,
+  inputContainer: {
+    width: '100%',
     paddingHorizontal: 16,
-    marginHorizontal: 16,
     marginTop: '5%',
   },
   forgotText: {
     color: COLORS.text,
     marginTop: '5%',
     fontFamily: FONTS.Regular,
+    alignSelf: 'center',
   },
   btnContainer: {
     width: '100%',
