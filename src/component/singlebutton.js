@@ -14,7 +14,7 @@ const SingleButton = ({onPress, color, text, disabled = false}) => {
       style={[
         styles.container,
         {backgroundColor: color || COLORS.primary},
-        disabled ? {opacity: 0.5} : {opacity: 1},
+        disabled ? {opacity: 0.7} : {opacity: 1},
       ]}>
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
