@@ -22,7 +22,7 @@ const SplashScreen = ({navigation}) => {
   const timeoutHelper = action => {
     const timer = setTimeout(() => {
       action();
-    }, 1700);
+    }, 1750);
     return () => clearTimeout(timer);
   };
 
