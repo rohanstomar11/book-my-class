@@ -10,7 +10,7 @@ export default function ClassRoom({classroomnum, booked = false}) {
     <TouchableOpacity
       style={[
         styles.classContainer,
-        {backgroundColor: booked ? COLORS.red95 : selected ? COLORS.green95 : COLORS.grey},
+        {backgroundColor: booked ? COLORS.red : selected ? COLORS.green : COLORS.grey},
         {width : selected ? 75 : 70},
         {height : selected ? 55 :50 }
         
