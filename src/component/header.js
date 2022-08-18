@@ -10,7 +10,9 @@ import auth from '@react-native-firebase/auth';
 import {FONTS} from '../assets/fontFamily';
 import {COLORS} from '../assets/color';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {Dropdown} from 'react-native-element-dropdown';
+import CustomDropDown from './dropdown';
+
+
 
 const data = [
   {label: 'Floor 0', value: '1'},
@@ -21,35 +23,8 @@ const data = [
   {label: 'Floor 5', value: '5'},
 ];
 
-// const timeData = [
-//   {label: '10:00am- 11:00am', value: '1'},
-//   {label: '11:00am- 12:00pm', value: '2'},
-//   {label: '1:00pm- 2:00pm', value: '3'},
-//   {label: '2:00pm- 3:00pm', value: '4'},
-//   {label: '3:00pm- 4:00pm', value: '5'},
-// ];
 
 export default function Header({navigation}) {
-  const [value, setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
-
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-  const [test, setText] = useState('Empty');
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-
-    // let tempDate = new Date(currentDate);
-    // let  fDate = tempDate.getDate() + '/' + (tempDate.getMonth()+1) + '/' + tempDate.getFullYear();
-  };
-
-  const showMode = currentMode => {
-    setShow(true);
-    setMode(currentMode);
-  };
 
   return (
     <View style={styles.rootcontainer}>
@@ -62,24 +37,8 @@ export default function Header({navigation}) {
           />
         </TouchableOpacity>
 
-        <Dropdown
-          style={styles.dateDropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          iconStyle={styles.iconStyle}
-          data={data}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder="Select Floor"
-          value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setValue(item.value);
-            setIsFocus(false);
-          }}
-        />
+        <CustomDropDown item={data}/>
+
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
@@ -103,24 +62,6 @@ export default function Header({navigation}) {
         </TouchableOpacity>
       </View>
 
-      {/* <View style={styles.secondcont}>
-        <TouchableOpacity
-          style={styles.Datecontainer}
-          placeholder="Select Date"
-          onPress={() => showMode('date')}>
-          <Text>Select Date</Text>
-        </TouchableOpacity>
-      </View> */}
-
-      {/* {show && (
-        <DatePicker
-          testID="datePicker"
-          value={date}
-          mode={mode}
-          displaye="default"
-          onChange={onChange}
-        />
-      )} */}
 
       {/* <Dropdown
         style={styles.timeDropdown}
