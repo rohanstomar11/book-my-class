@@ -5,12 +5,17 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
-} from 'react-native';
+  } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {FONTS} from '../assets/fontFamily';
 import {COLORS} from '../assets/color';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Dropdown} from 'react-native-element-dropdown';
+import DatePicker from 'react-native-date-picker';
+import { Button } from 'react-native';
+import SingleButton from './singlebutton';
+
+
 
 const data = [
   {label: 'Floor 0', value: '1'},
@@ -44,6 +49,9 @@ export default function Header({navigation}) {
 
     // let tempDate = new Date(currentDate);
     // let  fDate = tempDate.getDate() + '/' + (tempDate.getMonth()+1) + '/' + tempDate.getFullYear();
+
+    const [date, setDate] = useState(new Date())
+  const [open, setOpen] = useState(false)
   };
 
   const showMode = currentMode => {
@@ -139,6 +147,22 @@ export default function Header({navigation}) {
           setIsFocus(false);
         }}
       /> */}
+<Button title="Open" onPress={() => setOpen(true)} />
+<DatePicker
+     modal
+     open={open}
+        date={date}
+        onConfirm={(date) => {
+          setOpen(false)
+          setDate(date)
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+      />
+    <SingleButton
+    
+    />
     </View>
   );
 }
