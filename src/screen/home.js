@@ -5,12 +5,14 @@ import {
   SafeAreaView,
   View,
   ActivityIndicator,
+  ImageBackground,
 } from 'react-native';
 import {COLORS} from '../assets/color';
 import Header from '../component/header';
 import ClassRoom from '../component/room';
 import firestore from '@react-native-firebase/firestore';
 import SingleButton from '../component/singlebutton';
+
 
 const HomeScreen = ({navigation}) => {
   const [roomCount, setRoomCount] = useState(0);
@@ -66,7 +68,10 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
+     
+
       <Header navigation={navigation} />
+     
       {isLoading && (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator size={60} color={COLORS.primary} />
@@ -81,6 +86,14 @@ const HomeScreen = ({navigation}) => {
             alignItems: 'center',
             marginTop: '5%',
           }}>
+            <ImageBackground
+  source={require('../assets/images/logo.png')}
+  resizeMode="cover"
+  style={styles.imagecontainer}>
+<View style={styles.overlay}></View>
+</ImageBackground>
+
+
           {floor.map((item, index) => {
             return (
               <ClassRoom
@@ -128,6 +141,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     flex: 1,
   },
+  imagecontainer: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center"
+  }
 });
 
 export default HomeScreen;
