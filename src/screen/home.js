@@ -18,12 +18,15 @@ const HomeScreen = ({navigation}) => {
   const [selected, setSelected] = useState();
   const [isLoading, setisLoading] = useState(false);
   const bookedRoom = ['011', '022'];
+  const [floorValue,setfloorValue] = useState(0);
+
+  console.log(floorValue)
 
   useEffect(() => {
     setisLoading(true);
     firestore()
       .collection('floors')
-      .doc('0')
+      .doc(floorValue.toString())
       .get()
       .then(
         response => {
@@ -31,10 +34,12 @@ const HomeScreen = ({navigation}) => {
           for (let i = 1; i <= response._data?.room_count; i++) {
             if (Object.keys(floor).length < roomCount) {
               if (i < 10) {
-                let item = '00' + i.toString();
+                // let item = '00' + i.toString();
+                let item = floorValue.toString() +'0'+ i.toString() 
                 setFloor(floor => [...floor, item]);
               } else {
-                let item = '0' + i.toString();
+                // let item = '0' + i.toString();
+                let item = floorValue.toString() + i.toString();
                 setFloor(floor => [...floor, item]);
               }
             }
@@ -46,7 +51,7 @@ const HomeScreen = ({navigation}) => {
           console.error(error);
         },
       );
-  }, [roomCount]);
+  }, [roomCount,floorValue]);
 
   const selectingRoom = room => {
     if (selected === room) {
@@ -66,7 +71,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header navigation={navigation} />
+      <Header navigation={navigation} setfloorValue = {setfloorValue} />
       {isLoading && (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator size={60} color={COLORS.primary} />

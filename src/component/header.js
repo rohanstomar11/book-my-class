@@ -13,9 +13,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import CustomDropDown from './dropdown';
 
 
-
 const data = [
-  {label: 'Floor 0', value: '1'},
+  {label: 'Floor 0', value: '0'},
   {label: 'Floor 1', value: '1'},
   {label: 'Floor 2', value: '2'},
   {label: 'Floor 3', value: '3'},
@@ -24,8 +23,8 @@ const data = [
 ];
 
 
-export default function Header({navigation}) {
-
+export default function Header({navigation , setfloorValue} ) {
+  
   return (
     <View style={styles.rootcontainer}>
       <View style={styles.firstcont}>
@@ -37,7 +36,7 @@ export default function Header({navigation}) {
           />
         </TouchableOpacity>
 
-        <CustomDropDown item={data}/>
+        <CustomDropDown item={data} setfloorValue={setfloorValue}/>
 
         <TouchableOpacity
           activeOpacity={0.8}
@@ -61,25 +60,6 @@ export default function Header({navigation}) {
           />
         </TouchableOpacity>
       </View>
-
-
-      {/* <Dropdown
-        style={styles.timeDropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        data={timeData}
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder="Select Time Slot"
-        value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={item => {
-          setValue(item.value);
-          setIsFocus(false);
-        }}
-      /> */}
     </View>
   );
 }

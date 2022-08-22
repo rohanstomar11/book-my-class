@@ -4,7 +4,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import {COLORS} from '../assets/color';
 import {FONTS} from '../assets/fontFamily';
 
-export default function CustomDropDown({item}) {
+export default function CustomDropDown({item ,setfloorValue}) {
   const [value, setValue] = useState(0);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -27,6 +27,7 @@ export default function CustomDropDown({item}) {
       onBlur={() => setIsFocus(false)}
       onChange={item => {
         setValue(item.value);
+        setfloorValue(item.value)
         setIsFocus(false);
       }}
     />
