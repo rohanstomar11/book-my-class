@@ -5,6 +5,11 @@ import {
   SafeAreaView,
   View,
   ActivityIndicator,
+  ImageBackground,
+  Modal,
+  Text,
+  Pressable,
+  Alert,
 } from 'react-native';
 import {COLORS} from '../assets/color';
 import Header from '../component/header';
@@ -20,6 +25,7 @@ const HomeScreen = ({navigation}) => {
   const bookedRoom = ['011', '022'];
   const [floorValue, setfloorValue] = useState(0);
   const [max, setmax] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     setisLoading(true);
@@ -75,6 +81,26 @@ const HomeScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Header navigation={navigation} setfloorValue={setfloorValue} />
+
+      <View style={styles.CreatedView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>
+                This Lecure will be conducted by Prof.Bhagyashree Dhakulkar
+                Subj:{' '}
+              </Text>
+            </View>
+          </View>
+        </Modal>
+      </View>
+
       {isLoading && (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator size={60} color={COLORS.primary} />
@@ -114,7 +140,7 @@ const HomeScreen = ({navigation}) => {
           <SingleButton
             text={'Check Info'}
             disabled={selected ? false : true}
-            onPress={checkInfo}
+            onPress={() => setModalVisible(true)}
           />
         </View>
         <View style={{flex: 1, marginRight: 16}}>
@@ -135,6 +161,59 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.background,
     flex: 1,
+  },
+  imagecontainer: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    paddingBottom: 30,
+    paddingTop: 30,
+    paddingLeft: 100,
+    paddingRight: 100,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 1,
+  },
+  button: {
+    borderRadius: 10,
+    padding: 15,
+    elevation: 2,
+    marginBottom: 20,
+  },
+  buttonOpen: {
+    backgroundColor: COLORS.secondary,
+    marginTop: 50,
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'justify',
+  },
+  modalText: {
+    marginBottom: 30,
+    textAlign: 'justify',
+    color: 'black',
+    fontSize: 20,
   },
 });
 

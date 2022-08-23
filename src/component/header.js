@@ -27,15 +27,17 @@ const data = [
   {label: 'Floor 5', value: '5'},
 ];
 
-// const timeData = [
-//   {label: '10:00am- 11:00am', value: '1'},
-//   {label: '11:00am- 12:00pm', value: '2'},
-//   {label: '1:00pm- 2:00pm', value: '3'},
-//   {label: '2:00pm- 3:00pm', value: '4'},
-//   {label: '3:00pm- 4:00pm', value: '5'},
-// ];
+const timeData = [
+  {label: '10:00am- 11:00am', value: '1'},
+  {label: '11:00am- 12:00pm', value: '2'},
+  {label: '1:00pm- 2:00pm', value: '3'},
+  {label: '2:00pm- 3:00pm', value: '4'},
+  {label: '3:00pm- 4:00pm', value: '5'},
+];
+
 export default function Header({navigation, setfloorValue}) {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(0);
+  const [time, setTime] = useState(0);
   const [isFocus, setIsFocus] = useState(false);
 
   const [date, setDate] = useState(new Date());
@@ -119,14 +121,14 @@ export default function Header({navigation, setfloorValue}) {
         </TouchableOpacity>
       </View>
 
-      {/* <View style={styles.secondcont}>
-        <TouchableOpacity
-          style={styles.Datecontainer}
-          placeholder="Select Date"
+      <View style={styles.secondcont}>
+        {/* <TouchableOpacity
+          style={styles.Timecontainer}
+          placeholder="Select Time"
           onPress={() => showMode('date')}>
-          <Text>Select Date</Text>
-        </TouchableOpacity>
-      </View> */}
+          <Text>Select Time</Text>
+        </TouchableOpacity> */}
+      </View>
 
       {/* {show && (
         <DatePicker
@@ -138,7 +140,7 @@ export default function Header({navigation, setfloorValue}) {
         />
       )} */}
 
-      {/* <Dropdown
+      <Dropdown
         style={styles.timeDropdown}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
@@ -147,14 +149,14 @@ export default function Header({navigation, setfloorValue}) {
         labelField="label"
         valueField="value"
         placeholder="Select Time Slot"
-        value={value}
+        time={value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={item => {
-          setValue(item.value);
+          setTime(item.value);
           setIsFocus(false);
         }}
-      /> */}
+      />
       {/* <Button title="Open" onPress={() => setOpen(true)} /> */}
       <DatePicker
         modal
@@ -194,7 +196,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingVertical: 10,
     backgroundColor: COLORS.primary,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     width: '100%',
   },
   firstcont: {
@@ -240,7 +242,7 @@ const styles = StyleSheet.create({
   // },
   floorDropdown: {
     margin: 16,
-    height: 50,
+    height: 45,
     borderBottomColor: 'black',
     borderBottomWidth: 0.5,
     backgroundColor: COLORS.white,
@@ -265,13 +267,13 @@ const styles = StyleSheet.create({
   },
 
   timeDropdown: {
-    margin: 16,
+    margin: 10,
     height: 30,
     borderBottomColor: 'black',
     borderBottomWidth: 0.5,
     backgroundColor: COLORS.white,
-    width: '50%',
-    borderRadius: 5,
+    width: '55%',
+    borderRadius: 4,
   },
   dateinput: {
     backgroundColor: COLORS.white,
