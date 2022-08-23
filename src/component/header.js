@@ -96,25 +96,6 @@ export default function Header({navigation, setfloorValue}) {
         </TouchableOpacity>
 
         <CustomDropDown item={data} setfloorValue={setfloorValue} />
-
-        <Dropdown
-          style={styles.floorDropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          iconStyle={styles.iconStyle}
-          data={data}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder="Select Floor"
-          value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setValue(item.value);
-            setIsFocus(false);
-          }}
-        />
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
