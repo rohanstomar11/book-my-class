@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Modal,
   Text,
+  ScrollView,
 } from 'react-native';
 import {COLORS} from '../assets/color';
 import Header from '../component/header';
@@ -19,7 +20,7 @@ const HomeScreen = ({navigation}) => {
   const [floor, setFloor] = useState([]);
   const [selected, setSelected] = useState();
   const [isLoading, setisLoading] = useState(false);
-  const bookedRoom = ['011', '022'];
+  const bookedRoom = ['011', '022', '303'];
   const [floorValue, setfloorValue] = useState(0);
   const [max, setmax] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,14 +38,16 @@ const HomeScreen = ({navigation}) => {
           }
           setRoomCount(response._data?.room_count);
           for (let i = 1; i <= response._data?.room_count; i++) {
-            if (Object.keys(floor).length <= roomCount) {
+            if (Object.keys(floor).length < roomCount) {
               if (i < 10) {
                 let item = floorValue.toString() + '0' + i.toString();
                 setFloor(floor => [...floor, item]);
               } else {
-                // let item = '0' + i.toString();
                 let item = floorValue.toString() + i.toString();
                 setFloor(floor => [...floor, item]);
+                if (Object.keys(floor).length === roomCount - 1) {
+                  setmax(true);
+                }
               }
             } else {
               setmax(true);
@@ -100,9 +103,10 @@ const HomeScreen = ({navigation}) => {
         </View>
       )}
       {!isLoading && (
-        <View
-          style={{
+        <ScrollView
+          contentContainerStyle={{
             flexDirection: 'row',
+            flexGrow: 1,
             flexWrap: 'wrap',
             justifyContent: 'space-evenly',
             alignItems: 'center',
@@ -119,7 +123,7 @@ const HomeScreen = ({navigation}) => {
               />
             );
           })}
-        </View>
+        </ScrollView>
       )}
       <View
         style={{
