@@ -114,12 +114,6 @@ const HomeScreen = ({navigation}) => {
             alignItems: 'center',
             marginTop: '5%',
           }}>
-            <ImageBackground
-  source={require('../assets/images/logo.png')}
-  resizeMode="cover"
-  style={styles.imagecontainer}>
-<View style={styles.overlay}></View>
-</ImageBackground>
 
 
           {floor.map((item, index) => {
