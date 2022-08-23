@@ -12,11 +12,8 @@ import {FONTS} from '../assets/fontFamily';
 import {COLORS} from '../assets/color';
 import Icon from 'react-native-vector-icons/AntDesign';
 import CustomDropDown from './dropdown';
-
 import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
-import {Button} from 'react-native';
-import SingleButton from './singlebutton';
 
 const data = [
   {label: 'Floor 0', value: '0'},
@@ -43,7 +40,6 @@ export default function Header({navigation, setfloorValue}) {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  const [test, setText] = useState('Empty');
   const [open, setOpen] = useState(false);
 
   const [currentData, setcurrentData] = useState('');
@@ -53,38 +49,6 @@ export default function Header({navigation, setfloorValue}) {
     var year = new Date().getFullYear(); // current year
     setcurrentData(date + '/' + month + '/' + year);
   }, []);
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-
-    // const [currentData, setcurrentData] = useState('')
-    // useEffect (() => {
-    //   var date = new Date().gatedate()// current data
-    //   var month = new Date().getMonth() + 1 //current month
-    //   var year = new Date().getFullYear()// current year
-    //   setcurrentData(
-    //     date + '/' + month + '/' + year
-    //   )
-    // }, [])
-    // let tempDate = new Date(currentDate);
-    // let  fDate = tempDate.getDate() + '/' + (tempDate.getMonth()+1) + '/' + tempDate.getFullYear();
-  };
-
-  const showMode = currentMode => {
-    setShow(true);
-    setMode(currentMode);
-  };
-  //   const getCurrentDate=()=>{
-
-  //     var date = new Date().getDate();
-  //     var month = new Date().getMonth() + 1;
-  //     var year = new Date().getFullYear();
-
-  //     //Alert.alert(date + '-' + month + '-' + year);
-  //     // You can turn it in to your desired format
-  //     return date + '-' + month + '-' + year;//format: d-m-y;
-  // };
 
   return (
     <View style={styles.rootcontainer}>
@@ -121,71 +85,51 @@ export default function Header({navigation, setfloorValue}) {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.secondcont}>
-        {/* <TouchableOpacity
-          style={styles.Timecontainer}
-          placeholder="Select Time"
-          onPress={() => showMode('date')}>
-          <Text>Select Time</Text>
-        </TouchableOpacity> */}
-      </View>
+      <View style={{flexDirection: 'row'}}>
+        <Dropdown
+          style={styles.timeDropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          data={timeData}
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder="Select Time Slot"
+          time={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setTime(item.value);
+            setIsFocus(false);
+          }}
+        />
 
-      {/* {show && (
         <DatePicker
-          testID="datePicker"
-          value={date}
-          mode={mode}
-          displaye="default"
-          onChange={onChange}
+          modal
+          open={open}
+          date={date}
+          mode={'date'}
+          onConfirm={() => {
+            setOpen(false);
+            setDate(date);
+          }}
+          onCancel={() => {
+            setOpen(false);
+          }}
         />
-      )} */}
 
-      <Dropdown
-        style={styles.timeDropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        data={timeData}
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder="Select Time Slot"
-        time={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={item => {
-          setTime(item.value);
-          setIsFocus(false);
-        }}
-      />
-      {/* <Button title="Open" onPress={() => setOpen(true)} /> */}
-      <DatePicker
-        modal
-        open={open}
-        date={date}
-        mode={'date'}
-        onConfirm={date => {
-          setOpen(false);
-          setDate(date);
-        }}
-        onCancel={() => {
-          setOpen(false);
-        }}
-      />
-
-      <View style={styles.dateContainer}>
-        <Icon
-          name="calendar"
-          size={34}
-          color={COLORS.white}
-          style={styles.user}
-          onPress={() => setOpen(true)}
-        />
-        <TouchableOpacity style={styles.dateinput}>
-          <Text style={styles.datetext}>{currentData}</Text>
-        </TouchableOpacity>
-        {/* <Text >
-            {currentData}
-          </Text> */}
+        <View style={styles.dateContainer}>
+          <Icon
+            name="calendar"
+            size={34}
+            color={COLORS.white}
+            style={styles.user}
+            onPress={() => setOpen(true)}
+          />
+          <TouchableOpacity style={styles.dateinput}>
+            <Text style={styles.datetext}>{currentData}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -204,54 +148,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  secondcont: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-
   userImg: {
     height: 55,
     width: 55,
     borderRadius: 25,
     borderColor: COLORS.white,
     borderWidth: 0,
-  },
-
-  floorcontainer: {
-    backgroundColor: COLORS.white,
-    width: '60%',
-    borderRadius: 9,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-  },
-  floortext: {
-    color: COLORS.primary,
-    fontSize: 18,
-    fontFamily: FONTS.SemiBold,
-    letterSpacing: 0.5,
-    marginLeft: 20,
-  },
-  // Datecontainer: {
-  //   backgroundColor: COLORS.white,
-  //   minWidth: '45%',
-  //   maxHeight: 30,
-  //   borderRadius: 10,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
-  floorDropdown: {
-    margin: 16,
-    height: 45,
-    borderBottomColor: 'black',
-    borderBottomWidth: 0.5,
-    backgroundColor: COLORS.white,
-    width: '60%',
-    borderRadius: 5,
-  },
-  iconStyle: {
-    width: 30,
-    height: 30,
   },
   placeholderStyle: {
     fontSize: 16,
@@ -265,7 +167,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.SemiBold,
     paddingLeft: 10,
   },
-
   timeDropdown: {
     margin: 10,
     height: 30,
@@ -278,7 +179,7 @@ const styles = StyleSheet.create({
   dateinput: {
     backgroundColor: COLORS.white,
     color: COLORS.text,
-    width: '29%',
+    width: '50%',
     height: 28,
     borderRadius: 2.5,
     justifyContent: 'center',
@@ -295,6 +196,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: COLORS.primary,
     fontFamily: FONTS.SemiBold,
-    //: 'center',
   },
 });

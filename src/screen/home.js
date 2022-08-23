@@ -5,17 +5,14 @@ import {
   SafeAreaView,
   View,
   ActivityIndicator,
-  ImageBackground,
   Modal,
   Text,
-  Pressable,
-  Alert,
 } from 'react-native';
 import {COLORS} from '../assets/color';
 import Header from '../component/header';
 import ClassRoom from '../component/room';
 import firestore from '@react-native-firebase/firestore';
-import SingleButton from '../component/singlebutton';
+import GradientButton from '../component/gradientbutton';
 
 const HomeScreen = ({navigation}) => {
   const [roomCount, setRoomCount] = useState(0);
@@ -68,10 +65,6 @@ const HomeScreen = ({navigation}) => {
     } else {
       setSelected(room);
     }
-  };
-
-  const checkInfo = room => {
-    console.log('check info clicked' + room);
   };
 
   const bookRoom = room => {
@@ -136,20 +129,8 @@ const HomeScreen = ({navigation}) => {
           marginBottom: 20,
           minHeight: 54,
         }}>
-        <View style={{flex: 1, marginHorizontal: 16}}>
-          <SingleButton
-            text={'Check Info'}
-            disabled={selected ? false : true}
-            onPress={() => setModalVisible(true)}
-          />
-        </View>
-        <View style={{flex: 1, marginRight: 16}}>
-          <SingleButton
-            text={'Book Now'}
-            color={COLORS.green}
-            disabled={selected ? false : true}
-            onPress={bookRoom}
-          />
+        <View style={styles.btnContainer}>
+          <GradientButton text={'BOOK ROOM'} onPress={bookRoom} />
         </View>
       </View>
       <StatusBar backgroundColor={COLORS.primary} barStyle="light-content" />
@@ -194,6 +175,13 @@ const styles = StyleSheet.create({
     padding: 15,
     elevation: 2,
     marginBottom: 20,
+  },
+  btnContainer: {
+    width: '100%',
+    paddingHorizontal: 16,
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingBottom: '10%',
   },
   buttonOpen: {
     backgroundColor: COLORS.secondary,

@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity,Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {COLORS} from '../assets/color';
 import {FONTS} from '../assets/fontFamily';
 
-export default function CustomDropDown({item ,setfloorValue}) {
+export default function CustomDropDown({item, setfloorValue}) {
   const [value, setValue] = useState(0);
   const [isFocus, setIsFocus] = useState(false);
-
 
   return (
     <Dropdown
@@ -19,20 +18,17 @@ export default function CustomDropDown({item ,setfloorValue}) {
       maxHeight={300}
       labelField="label"
       valueField="value"
-      // labelField={labelField}
-      // valueField={valueField}
-      // placeholder={value}
       value={value}
       onFocus={() => setIsFocus(true)}
       onBlur={() => setIsFocus(false)}
-      onChange={item => {
-        setValue(item.value);
-        setfloorValue(item.value)
+      onChange={items => {
+        setValue(items.value);
+        setfloorValue(items.value);
         setIsFocus(false);
       }}
     />
   );
-};
+}
 
 const styles = StyleSheet.create({
   dateDropdown: {
