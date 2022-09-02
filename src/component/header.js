@@ -11,7 +11,7 @@ import {TIMEDATA, FLOORVALUE} from '../utility/constants';
 
 export default function Header({navigation, setfloorValue}) {
   const [value, setValue] = useState(0);
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(TIMEDATA[0]);
   const [isFocus, setIsFocus] = useState(false);
 
   const [date, setDate] = useState(new Date());
@@ -71,8 +71,7 @@ export default function Header({navigation, setfloorValue}) {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder="Select Time Slot"
-          time={value}
+          value={time}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
