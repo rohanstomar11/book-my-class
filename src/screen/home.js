@@ -12,18 +12,16 @@ import {
 import {COLORS} from '../assets/color';
 import Header from '../component/header';
 import ClassRoom from '../component/room';
-import firestore from '@react-native-firebase/firestore';
 import GradientButton from '../component/gradientbutton';
 import database from '@react-native-firebase/database';
+import {FLOOR} from '../utility/constants';
 
 const HomeScreen = ({navigation}) => {
-  const [roomCount, setRoomCount] = useState(0);
   const [floor, setFloor] = useState([]);
   const [selected, setSelected] = useState();
   const [isLoading, setisLoading] = useState(false);
   const [bookedRoom, setBookedRoom] = useState([]);
   const [floorValue, setfloorValue] = useState(0);
-  const [max, setmax] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const reference = database()
@@ -34,40 +32,9 @@ const HomeScreen = ({navigation}) => {
 
   useEffect(() => {
     setisLoading(true);
-    firestore()
-      .collection('floors')
-      .doc(floorValue.toString())
-      .get()
-      .then(
-        response => {
-          if (max === true) {
-            setFloor([]);
-          }
-          setRoomCount(response._data?.room_count);
-          for (let i = 1; i <= response._data?.room_count; i++) {
-            if (Object.keys(floor).length < roomCount) {
-              if (i < 10) {
-                let item = floorValue.toString() + '0' + i.toString();
-                setFloor(floor => [...floor, item]);
-              } else {
-                let item = floorValue.toString() + i.toString();
-                setFloor(floor => [...floor, item]);
-                if (Object.keys(floor).length === roomCount - 1) {
-                  setmax(true);
-                }
-              }
-            } else {
-              setmax(true);
-            }
-          }
-          setisLoading(false);
-        },
-        error => {
-          setisLoading(false);
-          console.error(error);
-        },
-      );
-  }, [roomCount, floorValue]);
+    setFloor(FLOOR[floorValue]);
+    setisLoading(false);
+  }, [floorValue]);
 
   const selectingRoom = room => {
     if (selected === room) {
@@ -119,17 +86,18 @@ const HomeScreen = ({navigation}) => {
             alignItems: 'center',
             marginTop: '5%',
           }}>
-          {floor.map((item, index) => {
-            return (
-              <ClassRoom
-                classroomnum={item}
-                key={index}
-                select={selectingRoom}
-                disabled={selected === item ? false : selected ? true : false}
-                booked={bookedRoom.includes(item)}
-              />
-            );
-          })}
+          {floor &&
+            floor.map((item, index) => {
+              return (
+                <ClassRoom
+                  classroomnum={item}
+                  key={index}
+                  select={selectingRoom}
+                  disabled={selected === item ? false : selected ? true : false}
+                  booked={bookedRoom.includes(item)}
+                />
+              );
+            })}
         </ScrollView>
       )}
       <View
