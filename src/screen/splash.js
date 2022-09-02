@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, StatusBar, Image} from 'react-native';
+import {StyleSheet, Text, View, StatusBar} from 'react-native';
 import React, {useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import {COLORS} from '../assets/color';
