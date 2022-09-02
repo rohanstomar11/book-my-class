@@ -14,16 +14,23 @@ import Header from '../component/header';
 import ClassRoom from '../component/room';
 import firestore from '@react-native-firebase/firestore';
 import GradientButton from '../component/gradientbutton';
+import database from '@react-native-firebase/database';
 
 const HomeScreen = ({navigation}) => {
   const [roomCount, setRoomCount] = useState(0);
   const [floor, setFloor] = useState([]);
   const [selected, setSelected] = useState();
   const [isLoading, setisLoading] = useState(false);
-  const bookedRoom = ['011', '022', '303'];
+  const [bookedRoom, setBookedRoom] = useState([]);
   const [floorValue, setfloorValue] = useState(0);
   const [max, setmax] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const reference = database()
+    .ref('/bookings/2022/7/2/0/1')
+    .on('value', snapshot => {
+      setBookedRoom(rooms => [...rooms, snapshot.val().roomId.toString()]);
+    });
 
   useEffect(() => {
     setisLoading(true);
