@@ -1,12 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-  Text,
-} from 'react-native';
+import {View, Image, TouchableOpacity, StyleSheet, Text} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {FONTS} from '../assets/fontFamily';
 import {COLORS} from '../assets/color';
@@ -14,23 +7,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import CustomDropDown from './dropdown';
 import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
-
-const data = [
-  {label: 'Floor 0', value: '0'},
-  {label: 'Floor 1', value: '1'},
-  {label: 'Floor 2', value: '2'},
-  {label: 'Floor 3', value: '3'},
-  {label: 'Floor 4', value: '4'},
-  {label: 'Floor 5', value: '5'},
-];
-
-const timeData = [
-  {label: '10:00am- 11:00am', value: '1'},
-  {label: '11:00am- 12:00pm', value: '2'},
-  {label: '1:00pm- 2:00pm', value: '3'},
-  {label: '2:00pm- 3:00pm', value: '4'},
-  {label: '3:00pm- 4:00pm', value: '5'},
-];
+import {TIMEDATA, FLOORVALUE} from '../utility/constants';
 
 export default function Header({navigation, setfloorValue}) {
   const [value, setValue] = useState(0);
@@ -61,7 +38,7 @@ export default function Header({navigation, setfloorValue}) {
           />
         </TouchableOpacity>
 
-        <CustomDropDown item={data} setfloorValue={setfloorValue} />
+        <CustomDropDown item={FLOORVALUE} setfloorValue={setfloorValue} />
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
@@ -90,7 +67,7 @@ export default function Header({navigation, setfloorValue}) {
           style={styles.timeDropdown}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
-          data={timeData}
+          data={TIMEDATA}
           maxHeight={300}
           labelField="label"
           valueField="value"
@@ -159,7 +136,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.primary,
     fontFamily: FONTS.SemiBold,
-    paddingLeft: 10,
+    paddingLeft: 16,
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -173,7 +150,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: 0.5,
     backgroundColor: COLORS.white,
-    width: '55%',
+    width: '50%',
     borderRadius: 4,
   },
   dateinput: {
