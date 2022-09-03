@@ -1,4 +1,4 @@
-package com.bookmyclass;
+package com.dypsoetbookymyclass;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
