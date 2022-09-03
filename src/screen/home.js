@@ -9,6 +9,8 @@ import {
   Text,
   ScrollView,
   Dimensions,
+  Animated,
+  Easing,
 } from 'react-native';
 import {COLORS} from '../assets/color';
 import Header from '../component/header';
@@ -19,6 +21,7 @@ import {FLOOR} from '../utility/constants';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {FONTS} from '../assets/fontFamily';
 import Input from '../component/input';
+import Lottie from 'lottie-react-native';
 
 const HomeScreen = ({navigation}) => {
   const [floor, setFloor] = useState([]);
@@ -34,6 +37,7 @@ const HomeScreen = ({navigation}) => {
   const [description, setDescription] = useState('');
 
   const booking = useRef();
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     setisLoading(true);
@@ -233,9 +237,23 @@ const HomeScreen = ({navigation}) => {
                   createdAt: now,
                   userID: 'admin',
                 });
+              setSuccess(true);
             }}
           />
         </View>
+
+        {success && (
+          <Lottie
+            autoPlay={true}
+            source={require('../assets/lottie/success.json')}
+            loop={false}
+            style={{position: 'absolute'}}
+            onAnimationFinish={() => {
+              booking.current.close();
+              setSuccess(false);
+            }}
+          />
+        )}
       </RBSheet>
       <StatusBar backgroundColor={COLORS.primary} barStyle="light-content" />
     </SafeAreaView>
