@@ -21,7 +21,8 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {FONTS} from '../assets/fontFamily';
 import Input from '../component/input';
 import Lottie from 'lottie-react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const HomeScreen = ({navigation}) => {
   const [floor, setFloor] = useState([]);
@@ -78,8 +79,9 @@ const HomeScreen = ({navigation}) => {
   const bookRoom = () => {
     console.log('Book Room: ' + selected);
     booking.current.open();
+    redpopup = {redpopup}
   };
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <Header
@@ -99,10 +101,37 @@ const HomeScreen = ({navigation}) => {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>
-                This Lecure will be conducted by Prof.Bhagyashree Dhakulkar
-                Subj:{' '}
-              </Text>
+              <View style={{alignItems:'flex-end'}}>
+              <TouchableOpacity style={{activeOpacity:0.9}} onPress={() => setModalVisible(false)}>
+                <Icon
+            name="closecircle"
+            size={30}
+            color={COLORS.red95}
+            style={styles.user}
+          />
+          </TouchableOpacity>
+              </View>
+              <View style={styles.first}>
+                <TouchableOpacity style={styles.circle}>
+                  <Text style={styles.circleText}>341</Text>
+                </TouchableOpacity>
+                <View style={styles.titleConatainer}>
+                  <View style={{alignItems:'flex-end'}}><Text style={styles.titleText}>APP DEVELOPEMENT</Text></View>
+                  <View style={{alignItems:'flex-end'}}><Text >Bhagyashree Dhakulkar</Text></View>
+                  
+                </View>
+              </View>
+              <View style={styles.second}>
+                <Text style={styles.modalText}>
+                This lecture is scheduled for android developement.Please come fast.
+                </Text>
+              </View>
+              <View style={styles.third}>
+                <Text style={styles.timeText}>02/09/22</Text>
+                <Text style={styles.timeText}>01:00PM - 02:00PM</Text>
+              </View>
+
+              
             </View>
           </View>
         </Modal>
@@ -124,6 +153,7 @@ const HomeScreen = ({navigation}) => {
                   select={selectingRoom}
                   disabled={selected === item ? false : selected ? true : false}
                   booked={bookedRoom.includes(item)}
+                  // onPress={ bookedRoom ?()=>setModalVisible(true) :()=>setModalVisible(false)}
                 />
               );
             })}
@@ -133,7 +163,8 @@ const HomeScreen = ({navigation}) => {
         <View style={styles.btnContainer}>
           <GradientButton
             text={'BOOK ROOM'}
-            onPress={bookRoom}
+            // onPress={bookRoom}
+            onPress={() => setModalVisible(true)}
             disabled={selected ? false : true}
           />
         </View>
@@ -254,13 +285,12 @@ const HomeScreen = ({navigation}) => {
             onPress={() => {
               database()
                 .ref(
-                  `/bookings/${now.getFullYear()}/${now.getMonth()}/${now.getDate()}/${floorValue}/0/${selected}`,
+                  `/bookings/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${floorValue}/${timeSlot}/${selected}`,
                 )
                 .set({
                   title: title,
                   faculty: faculty,
                   description: description,
-                  createdAt: now,
                   userID: 'admin',
                 })
                 .then(
@@ -310,21 +340,56 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
+    backgroundColor: 'rgba(0,0,0,0.6)',
   },
   modalView: {
-    margin: 20,
+    margin: 30,
     backgroundColor: 'white',
-    borderRadius: 10,
-    paddingBottom: 30,
-    paddingTop: 30,
-    paddingLeft: 100,
-    paddingRight: 100,
-    alignItems: 'center',
+    borderRadius: 20,
+    paddingVertical:20,
+    paddingHorizontal: 20,
     shadowColor: '#000',
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 1,
+    borderWidth:2,
+    borderColor:'red'
+  },
+  first: {
+    flexDirection: 'row', 
+  },
+  circle: {
+    width: 75,
+    height: 75,
+    borderRadius: 75 / 2,
+    backgroundColor: COLORS.red,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation:10,    
+  },
+  circleText: {
+    color: COLORS.white,
+    fontFamily: FONTS.Medium,
+    fontSize: 28,
+  },
+  titleConatainer:{
+    justifyContent:'center',
+    marginHorizontal:20,
+    width:'75%',
+  },
+  titleText:{
+    fontFamily:FONTS.Bold,
+    color:COLORS.red,
+    fontSize:20,
+    alignItems:'flex-end'
+  },
+  
+  third:{
+    alignItems:'flex-end'
+  },
+  timeText:{
+    color:COLORS.red,
+    fontFamily:FONTS.Medium
   },
   button: {
     borderRadius: 10,
@@ -354,7 +419,7 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
   },
   modalText: {
-    marginBottom: 30,
+    marginTop:10,
     textAlign: 'justify',
     color: 'black',
     fontSize: 20,
