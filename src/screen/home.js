@@ -9,8 +9,7 @@ import {
   Text,
   ScrollView,
   Dimensions,
-  Animated,
-  Easing,
+  TouchableOpacity,
 } from 'react-native';
 import {COLORS} from '../assets/color';
 import Header from '../component/header';
@@ -22,6 +21,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {FONTS} from '../assets/fontFamily';
 import Input from '../component/input';
 import Lottie from 'lottie-react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const HomeScreen = ({navigation}) => {
   const [floor, setFloor] = useState([]);
@@ -191,6 +191,25 @@ const HomeScreen = ({navigation}) => {
               01:00 PM - 02:00 PM
             </Text>
           </View>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => booking.current.close()}
+            style={{flex: 1}}>
+            <Icon
+              name={'close'}
+              size={30}
+              style={{
+                position: 'absolute',
+                right: '20%',
+                top: '-15%',
+                paddingVertical: 5,
+                paddingHorizontal: 8,
+                elevation: 16,
+                borderRadius: 20,
+              }}
+              color={COLORS.red95}
+            />
+          </TouchableOpacity>
         </View>
         <View style={{marginHorizontal: 16}}>
           <Input
@@ -249,8 +268,9 @@ const HomeScreen = ({navigation}) => {
             loop={false}
             style={{position: 'absolute'}}
             onAnimationFinish={() => {
-              booking.current.close();
               setSuccess(false);
+              booking.current.close();
+              setSelected();
             }}
           />
         )}
