@@ -18,6 +18,7 @@ import database from '@react-native-firebase/database';
 import {FLOOR} from '../utility/constants';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {FONTS} from '../assets/fontFamily';
+import Input from '../component/input';
 
 const HomeScreen = ({navigation}) => {
   const [floor, setFloor] = useState([]);
@@ -28,15 +29,20 @@ const HomeScreen = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const now = new Date();
   const height = Dimensions.get('screen').height;
+  const [title, setTitle] = useState('');
+  const [faculty, setFaculty] = useState('');
+  const [description, setDescription] = useState('');
 
   const booking = useRef();
 
   useEffect(() => {
     setisLoading(true);
     setFloor(FLOOR[floorValue]);
-    database()
-      .ref(`/bookings/${now.getFullYear()}/7/2/${floorValue}/1`)
-      .once('value', snapshot => {
+    const subscribe = database()
+      .ref(
+        `/bookings/${now.getFullYear()}/${now.getMonth()}/${now.getDate()}/${floorValue}/0`,
+      )
+      .on('value', snapshot => {
         snapshot.forEach(item => {
           if (!snapshot.exists()) {
             setBookedRoom([]);
@@ -46,6 +52,13 @@ const HomeScreen = ({navigation}) => {
         });
       });
     setisLoading(false);
+
+    return () =>
+      database()
+        .ref(
+          `/users/${`/bookings/${now.getFullYear()}/${now.getMonth()}/${now.getDate()}/${floorValue}/0`}`,
+        )
+        .off('value', subscribe);
   }, [floorValue]);
 
   const selectingRoom = room => {
@@ -140,8 +153,11 @@ const HomeScreen = ({navigation}) => {
           <View
             style={{
               backgroundColor: COLORS.primary,
-              padding: 20,
+              paddingVertical: 20,
+              paddingHorizontal: 16,
               borderRadius: 100,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
             <Text
               style={{
@@ -150,7 +166,7 @@ const HomeScreen = ({navigation}) => {
                 fontSize: 30,
                 letterSpacing: 2,
               }}>
-              012
+              {selected}
             </Text>
           </View>
           <View style={{flex: 1, justifyContent: 'center', marginLeft: '3%'}}>
@@ -171,6 +187,54 @@ const HomeScreen = ({navigation}) => {
               01:00 PM - 02:00 PM
             </Text>
           </View>
+        </View>
+        <View style={{marginHorizontal: 16}}>
+          <Input
+            state={title}
+            setState={setTitle}
+            placeholder={'Title'}
+            top={'5%'}
+            icon={'envelope-o'}
+          />
+          <Input
+            state={faculty}
+            setState={setFaculty}
+            placeholder={'Faculty Name'}
+            top={'5%'}
+            icon={'envelope-o'}
+          />
+          <Input
+            state={description}
+            setState={setDescription}
+            placeholder={'Description'}
+            top={'5%'}
+            icon={'envelope-o'}
+            multiline={true}
+          />
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 10,
+            width: '90%',
+            alignSelf: 'center',
+          }}>
+          <GradientButton
+            text={'BOOK'}
+            onPress={() => {
+              database()
+                .ref(
+                  `/bookings/${now.getFullYear()}/${now.getMonth()}/${now.getDate()}/${floorValue}/0/${selected}`,
+                )
+                .set({
+                  title: title,
+                  faculty: faculty,
+                  description: description,
+                  createdAt: now,
+                  userID: 'admin',
+                });
+            }}
+          />
         </View>
       </RBSheet>
       <StatusBar backgroundColor={COLORS.primary} barStyle="light-content" />
