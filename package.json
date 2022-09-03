@@ -1,6 +1,6 @@
 {
   "name": "BookMyClass",
-  "version": "0.0.1",
+  "version": "0.0.9",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -16,7 +16,8 @@
     "start-cache-clear": "react-native start --reset-cache",
     "android-clean": "cd android && ./gradlew clean && cd ..",
     "android-release": "react-native run-android --variant=release",
-    "android-bundle-release": "cd android && ./gradlew bundleRelease && cd .."
+    "android-bundle-release": "cd android && ./gradlew bundleRelease && cd ..",
+    "codepush-android": "appcenter codepush release-react -a DypSOET/BookMyClass -d Staging"
   },
   "dependencies": {
     "@dudigital/react-native-zoomable-view": "^1.1.4",
