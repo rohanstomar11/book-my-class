@@ -79,7 +79,7 @@ const HomeScreen = ({navigation}) => {
   const bookRoom = () => {
     console.log('Book Room: ' + selected);
     booking.current.open();
-    redpopup = {redpopup}
+    
   };
   
   return (
