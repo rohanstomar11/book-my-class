@@ -254,13 +254,12 @@ const HomeScreen = ({navigation}) => {
             onPress={() => {
               database()
                 .ref(
-                  `/bookings/${now.getFullYear()}/${now.getMonth()}/${now.getDate()}/${floorValue}/0/${selected}`,
+                  `/bookings/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${floorValue}/${timeSlot}/${selected}`,
                 )
                 .set({
                   title: title,
                   faculty: faculty,
                   description: description,
-                  createdAt: now,
                   userID: 'admin',
                 })
                 .then(
