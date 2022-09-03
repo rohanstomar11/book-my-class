@@ -9,14 +9,11 @@ import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import {TIMEDATA, FLOORVALUE} from '../utility/constants';
 
-export default function Header({navigation, setfloorValue}) {
-  const [value, setValue] = useState(0);
+export default function Header({navigation, setfloorValue, setTimeSlot}) {
   const [time, setTime] = useState(TIMEDATA[0]);
   const [isFocus, setIsFocus] = useState(false);
 
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
 
   const [currentData, setcurrentData] = useState('');
@@ -62,7 +59,7 @@ export default function Header({navigation, setfloorValue}) {
         </TouchableOpacity>
       </View>
 
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <Dropdown
           style={styles.timeDropdown}
           placeholderStyle={styles.placeholderStyle}
@@ -75,36 +72,33 @@ export default function Header({navigation, setfloorValue}) {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setTime(item.value);
+            setTimeSlot(item.value);
+            setTime(item);
             setIsFocus(false);
           }}
         />
 
-        <DatePicker
-          modal
-          open={open}
-          date={date}
-          mode={'date'}
-          onConfirm={() => {
-            setOpen(false);
-            setDate(date);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
-
         <View style={styles.dateContainer}>
-          <Icon
-            name="calendar"
-            size={34}
-            color={COLORS.white}
-            style={styles.user}
+          <TouchableOpacity
             onPress={() => setOpen(true)}
-          />
-          <TouchableOpacity style={styles.dateinput}>
+            activeOpacity={0.85}
+            style={styles.dateinput}>
             <Text style={styles.datetext}>{currentData}</Text>
           </TouchableOpacity>
+
+          <DatePicker
+            modal
+            open={open}
+            date={date}
+            mode={'date'}
+            onConfirm={() => {
+              setOpen(false);
+              setDate(date);
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
         </View>
       </View>
     </View>
@@ -144,33 +138,34 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   timeDropdown: {
-    margin: 10,
-    height: 30,
-    borderBottomColor: 'black',
-    borderBottomWidth: 0.5,
     backgroundColor: COLORS.white,
-    width: '50%',
+    flex: 1,
+    marginRight: '1%',
     borderRadius: 4,
   },
   dateinput: {
     backgroundColor: COLORS.white,
     color: COLORS.text,
-    width: '50%',
-    height: 28,
-    borderRadius: 2.5,
-    justifyContent: 'center',
+    width: '100%',
+    padding: 2,
+    borderRadius: 4,
+    height: '100%',
   },
   dateContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
+    marginLeft: '1%',
+    height: '100%',
   },
   user: {
     marginRight: 3,
   },
   datetext: {
-    paddingLeft: 10,
-    fontSize: 13,
+    fontSize: 18,
+    alignSelf: 'center',
     color: COLORS.primary,
     fontFamily: FONTS.SemiBold,
+    marginTop: '2%',
   },
 });

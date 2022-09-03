@@ -16,7 +16,7 @@ import Header from '../component/header';
 import ClassRoom from '../component/room';
 import GradientButton from '../component/gradientbutton';
 import database from '@react-native-firebase/database';
-import {FLOOR} from '../utility/constants';
+import {FLOOR, TIMEDATA} from '../utility/constants';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {FONTS} from '../assets/fontFamily';
 import Input from '../component/input';
@@ -29,6 +29,8 @@ const HomeScreen = ({navigation}) => {
   const [isLoading, setisLoading] = useState(false);
   const [bookedRoom, setBookedRoom] = useState([]);
   const [floorValue, setfloorValue] = useState(0);
+  const [timeSlot, setTimeSlot] = useState(0);
+  const [date, setDate] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const now = new Date();
   const height = Dimensions.get('screen').height;
@@ -44,9 +46,10 @@ const HomeScreen = ({navigation}) => {
     setFloor(FLOOR[floorValue]);
     const subscribe = database()
       .ref(
-        `/bookings/${now.getFullYear()}/${now.getMonth()}/${now.getDate()}/${floorValue}/0`,
+        `/bookings/${now.getFullYear()}/${now.getMonth()}/${now.getDate()}/${floorValue}/${timeSlot}`,
       )
       .on('value', snapshot => {
+        setBookedRoom([]);
         snapshot.forEach(item => {
           if (!snapshot.exists()) {
             setBookedRoom([]);
@@ -63,7 +66,7 @@ const HomeScreen = ({navigation}) => {
           `/users/${`/bookings/${now.getFullYear()}/${now.getMonth()}/${now.getDate()}/${floorValue}/0`}`,
         )
         .off('value', subscribe);
-  }, [floorValue]);
+  }, [floorValue, timeSlot, date]);
 
   const selectingRoom = room => {
     if (selected === room) {
@@ -80,7 +83,12 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header navigation={navigation} setfloorValue={setfloorValue} />
+      <Header
+        navigation={navigation}
+        setfloorValue={setfloorValue}
+        setTimeSlot={setTimeSlot}
+        setDate={setDate}
+      />
 
       <View style={styles.CreatedView}>
         <Modal
@@ -188,7 +196,7 @@ const HomeScreen = ({navigation}) => {
                 color: COLORS.primary,
                 fontSize: 14,
               }}>
-              01:00 PM - 02:00 PM
+              {TIMEDATA[timeSlot]?.label}
             </Text>
           </View>
           <TouchableOpacity
@@ -255,8 +263,15 @@ const HomeScreen = ({navigation}) => {
                   description: description,
                   createdAt: now,
                   userID: 'admin',
-                });
-              setSuccess(true);
+                })
+                .then(
+                  () => {
+                    setSuccess(true);
+                  },
+                  error => {
+                    console.error(error);
+                  },
+                );
             }}
           />
         </View>
@@ -266,7 +281,7 @@ const HomeScreen = ({navigation}) => {
             autoPlay={true}
             source={require('../assets/lottie/success.json')}
             loop={false}
-            style={{position: 'absolute'}}
+            style={{position: 'absolute', backgroundColor: 'transparent'}}
             onAnimationFinish={() => {
               setSuccess(false);
               booking.current.close();
