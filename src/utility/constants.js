@@ -162,3 +162,20 @@ export const FLOOR = {
     '525',
   ],
 };
+
+export const TIMEDATA = [
+  {label: '10:00am-11:00am', value: '0'},
+  {label: '11:00am-12:00pm', value: '1'},
+  {label: '1:00pm-2:00pm', value: '2'},
+  {label: '2:00pm-3:00pm', value: '3'},
+  {label: '3:00pm-4:00pm', value: '4'},
+];
+
+export const FLOORVALUE = [
+  {label: 'Floor 0', value: '0'},
+  {label: 'Floor 1', value: '1'},
+  {label: 'Floor 2', value: '2'},
+  {label: 'Floor 3', value: '3'},
+  {label: 'Floor 4', value: '4'},
+  {label: 'Floor 5', value: '5'},
+];

@@ -5,7 +5,7 @@ import {COLORS} from '../assets/color';
 import {FONTS} from '../assets/fontFamily';
 
 export default function CustomDropDown({item, setfloorValue}) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(item[0]);
   const [isFocus, setIsFocus] = useState(false);
 
   return (

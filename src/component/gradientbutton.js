@@ -4,14 +4,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import {FONTS} from '../assets/fontFamily';
 import {COLORS} from '../assets/color';
 
-const GradientButton = ({onPress, colors, text}) => {
+const GradientButton = ({onPress, colors, text, disabled = false}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.85}
       onPress={() => {
         onPress();
       }}
-      style={styles.container}>
+      disabled={disabled}
+      style={[styles.container, disabled ? {opacity: 0.5} : {}]}>
       <LinearGradient
         style={styles.gradientContainer}
         colors={colors || [COLORS.primary, COLORS.secondary]}

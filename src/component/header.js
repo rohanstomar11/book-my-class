@@ -1,12 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-  Text,
-} from 'react-native';
+import React, {useState} from 'react';
+import {View, Image, TouchableOpacity, StyleSheet, Text} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {FONTS} from '../assets/fontFamily';
 import {COLORS} from '../assets/color';
@@ -14,41 +7,20 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import CustomDropDown from './dropdown';
 import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
+import {TIMEDATA, FLOORVALUE} from '../utility/constants';
+import {getDate} from '../utility/helper';
 
-const data = [
-  {label: 'Floor 0', value: '0'},
-  {label: 'Floor 1', value: '1'},
-  {label: 'Floor 2', value: '2'},
-  {label: 'Floor 3', value: '3'},
-  {label: 'Floor 4', value: '4'},
-  {label: 'Floor 5', value: '5'},
-];
-
-const timeData = [
-  {label: '10:00am- 11:00am', value: '1'},
-  {label: '11:00am- 12:00pm', value: '2'},
-  {label: '1:00pm- 2:00pm', value: '3'},
-  {label: '2:00pm- 3:00pm', value: '4'},
-  {label: '3:00pm- 4:00pm', value: '5'},
-];
-
-export default function Header({navigation, setfloorValue}) {
-  const [value, setValue] = useState(0);
-  const [time, setTime] = useState(0);
+export default function Header({
+  navigation,
+  setfloorValue,
+  setTimeSlot,
+  selectDate,
+}) {
+  const [time, setTime] = useState(TIMEDATA[0]);
   const [isFocus, setIsFocus] = useState(false);
 
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
-
-  const [currentData, setcurrentData] = useState('');
-  useEffect(() => {
-    var date = new Date().getDate(); // current data
-    var month = new Date().getMonth() + 1; //current month
-    var year = new Date().getFullYear(); // current year
-    setcurrentData(date + '/' + month + '/' + year);
-  }, []);
 
   return (
     <View style={styles.rootcontainer}>
@@ -61,7 +33,7 @@ export default function Header({navigation, setfloorValue}) {
           />
         </TouchableOpacity>
 
-        <CustomDropDown item={data} setfloorValue={setfloorValue} />
+        <CustomDropDown item={FLOORVALUE} setfloorValue={setfloorValue} />
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
@@ -85,50 +57,47 @@ export default function Header({navigation, setfloorValue}) {
         </TouchableOpacity>
       </View>
 
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <Dropdown
           style={styles.timeDropdown}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
-          data={timeData}
+          data={TIMEDATA}
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder="Select Time Slot"
-          time={value}
+          value={time}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setTime(item.value);
+            setTimeSlot(item.value);
+            setTime(item);
             setIsFocus(false);
           }}
         />
 
-        <DatePicker
-          modal
-          open={open}
-          date={date}
-          mode={'date'}
-          onConfirm={() => {
-            setOpen(false);
-            setDate(date);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
-
         <View style={styles.dateContainer}>
-          <Icon
-            name="calendar"
-            size={34}
-            color={COLORS.white}
-            style={styles.user}
+          <TouchableOpacity
             onPress={() => setOpen(true)}
-          />
-          <TouchableOpacity style={styles.dateinput}>
-            <Text style={styles.datetext}>{currentData}</Text>
+            activeOpacity={0.85}
+            style={styles.dateinput}>
+            <Text style={styles.datetext}>{getDate(date)}</Text>
           </TouchableOpacity>
+
+          <DatePicker
+            modal
+            open={open}
+            date={date}
+            mode={'date'}
+            onConfirm={item => {
+              setDate(item);
+              selectDate(item);
+              setOpen(false);
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
         </View>
       </View>
     </View>
@@ -159,7 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.primary,
     fontFamily: FONTS.SemiBold,
-    paddingLeft: 10,
+    paddingLeft: 16,
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -168,33 +137,34 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   timeDropdown: {
-    margin: 10,
-    height: 30,
-    borderBottomColor: 'black',
-    borderBottomWidth: 0.5,
     backgroundColor: COLORS.white,
-    width: '55%',
+    flex: 1,
+    marginRight: '1%',
     borderRadius: 4,
   },
   dateinput: {
     backgroundColor: COLORS.white,
     color: COLORS.text,
-    width: '50%',
-    height: 28,
-    borderRadius: 2.5,
-    justifyContent: 'center',
+    width: '100%',
+    padding: 2,
+    borderRadius: 4,
+    height: '100%',
   },
   dateContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
+    marginLeft: '1%',
+    height: '100%',
   },
   user: {
     marginRight: 3,
   },
   datetext: {
-    paddingLeft: 10,
-    fontSize: 13,
+    fontSize: 16,
+    alignSelf: 'center',
     color: COLORS.primary,
     fontFamily: FONTS.SemiBold,
+    marginTop: '2%',
   },
 });
