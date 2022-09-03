@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   View,
   ActivityIndicator,
-  Modal,
   Text,
   ScrollView,
   Dimensions,
@@ -21,7 +20,8 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {FONTS} from '../assets/fontFamily';
 import Input from '../component/input';
 import Lottie from 'lottie-react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const HomeScreen = ({navigation}) => {
   const [floor, setFloor] = useState([]);
@@ -31,7 +31,6 @@ const HomeScreen = ({navigation}) => {
   const [floorValue, setfloorValue] = useState(0);
   const [timeSlot, setTimeSlot] = useState(0);
   const [date, setDate] = useState(new Date());
-  const [modalVisible, setModalVisible] = useState(false);
   const height = Dimensions.get('screen').height;
   const [title, setTitle] = useState('');
   const [faculty, setFaculty] = useState('');
@@ -88,25 +87,6 @@ const HomeScreen = ({navigation}) => {
         setTimeSlot={setTimeSlot}
         selectDate={setDate}
       />
-
-      <View style={styles.CreatedView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>
-                This Lecure will be conducted by Prof.Bhagyashree Dhakulkar
-                Subj:{' '}
-              </Text>
-            </View>
-          </View>
-        </Modal>
-      </View>
 
       {isLoading && (
         <View style={styles.activityIndicator}>
@@ -298,65 +278,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     flex: 1,
   },
-  imagecontainer: {
-    flex: 1,
-  },
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 50,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    paddingBottom: 30,
-    paddingTop: 30,
-    paddingLeft: 100,
-    paddingRight: 100,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 1,
-  },
-  button: {
-    borderRadius: 10,
-    padding: 15,
-    elevation: 2,
-    marginBottom: 20,
-  },
   btnContainer: {
     width: '100%',
     paddingHorizontal: 16,
     flex: 1,
     justifyContent: 'flex-end',
     paddingBottom: '10%',
-  },
-  buttonOpen: {
-    backgroundColor: COLORS.secondary,
-    marginTop: 50,
-    marginLeft: 30,
-    marginRight: 30,
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'justify',
-  },
-  modalText: {
-    marginBottom: 30,
-    textAlign: 'justify',
-    color: 'black',
-    fontSize: 20,
   },
   activityIndicator: {
     flex: 1,
