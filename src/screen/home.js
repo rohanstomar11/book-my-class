@@ -30,7 +30,7 @@ const HomeScreen = ({navigation}) => {
   const [bookedRoom, setBookedRoom] = useState([]);
   const [floorValue, setfloorValue] = useState(0);
   const [timeSlot, setTimeSlot] = useState(0);
-  const [date, setDate] = useState();
+  const [date, setDate] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const now = new Date();
   const height = Dimensions.get('screen').height;
@@ -87,7 +87,7 @@ const HomeScreen = ({navigation}) => {
         navigation={navigation}
         setfloorValue={setfloorValue}
         setTimeSlot={setTimeSlot}
-        setDate={setDate}
+        selectDate={setDate}
       />
 
       <View style={styles.CreatedView}>

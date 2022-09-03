@@ -9,20 +9,30 @@ import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import {TIMEDATA, FLOORVALUE} from '../utility/constants';
 
-export default function Header({navigation, setfloorValue, setTimeSlot}) {
+export default function Header({
+  navigation,
+  setfloorValue,
+  setTimeSlot,
+  selectDate,
+}) {
   const [time, setTime] = useState(TIMEDATA[0]);
   const [isFocus, setIsFocus] = useState(false);
 
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
 
-  const [currentData, setcurrentData] = useState('');
-  useEffect(() => {
-    var date = new Date().getDate(); // current data
-    var month = new Date().getMonth() + 1; //current month
-    var year = new Date().getFullYear(); // current year
-    setcurrentData(date + '/' + month + '/' + year);
-  }, []);
+  const getDate = input => {
+    let current = input;
+    return `${
+      parseInt(current.getDate(), 10) > 9
+        ? current.getDate()
+        : '0' + current.getDate()
+    }/${
+      parseInt(current.getMonth(), 10) > 9
+        ? current.getMonth()
+        : '0' + current.getMonth()
+    }/${current.getFullYear()}`;
+  };
 
   return (
     <View style={styles.rootcontainer}>
@@ -83,7 +93,7 @@ export default function Header({navigation, setfloorValue, setTimeSlot}) {
             onPress={() => setOpen(true)}
             activeOpacity={0.85}
             style={styles.dateinput}>
-            <Text style={styles.datetext}>{currentData}</Text>
+            <Text style={styles.datetext}>{getDate(date)}</Text>
           </TouchableOpacity>
 
           <DatePicker
@@ -91,9 +101,10 @@ export default function Header({navigation, setfloorValue, setTimeSlot}) {
             open={open}
             date={date}
             mode={'date'}
-            onConfirm={() => {
+            onConfirm={item => {
+              setDate(item);
+              selectDate(getDate(item));
               setOpen(false);
-              setDate(date);
             }}
             onCancel={() => {
               setOpen(false);
@@ -162,7 +173,7 @@ const styles = StyleSheet.create({
     marginRight: 3,
   },
   datetext: {
-    fontSize: 18,
+    fontSize: 16,
     alignSelf: 'center',
     color: COLORS.primary,
     fontFamily: FONTS.SemiBold,
