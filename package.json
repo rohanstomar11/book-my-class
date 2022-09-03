@@ -17,7 +17,7 @@
     "android-clean": "cd android && ./gradlew clean && cd ..",
     "android-release": "react-native run-android --variant=release",
     "android-bundle-release": "cd android && ./gradlew bundleRelease && cd ..",
-    "codepush-android": "appcenter codepush release-react -a DypSOET/BookMyClass -d Staging"
+    "codepush-android": "appcenter codepush release-react -a DypSOET/BookMyClass -d Production"
   },
   "dependencies": {
     "@dudigital/react-native-zoomable-view": "^1.1.4",
