@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './src/screen/home';
 import Splash from './src/screen/splash';
 import Login from './src/screen/login';
+import codePush from 'react-native-code-push';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -25,4 +26,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default codePush(App);
