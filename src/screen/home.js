@@ -30,9 +30,8 @@ const HomeScreen = ({navigation}) => {
   const [bookedRoom, setBookedRoom] = useState([]);
   const [floorValue, setfloorValue] = useState(0);
   const [timeSlot, setTimeSlot] = useState(0);
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date());
   const [modalVisible, setModalVisible] = useState(false);
-  const now = new Date();
   const height = Dimensions.get('screen').height;
   const [title, setTitle] = useState('');
   const [faculty, setFaculty] = useState('');
@@ -46,7 +45,7 @@ const HomeScreen = ({navigation}) => {
     setFloor(FLOOR[floorValue]);
     const subscribe = database()
       .ref(
-        `/bookings/${now.getFullYear()}/${now.getMonth()}/${now.getDate()}/${floorValue}/${timeSlot}`,
+        `/bookings/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${floorValue}/${timeSlot}`,
       )
       .on('value', snapshot => {
         setBookedRoom([]);
@@ -63,7 +62,7 @@ const HomeScreen = ({navigation}) => {
     return () =>
       database()
         .ref(
-          `/users/${`/bookings/${now.getFullYear()}/${now.getMonth()}/${now.getDate()}/${floorValue}/0`}`,
+          `/users/${`/bookings/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${floorValue}/0`}`,
         )
         .off('value', subscribe);
   }, [floorValue, timeSlot, date]);

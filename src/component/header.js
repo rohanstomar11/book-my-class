@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, Image, TouchableOpacity, StyleSheet, Text} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {FONTS} from '../assets/fontFamily';
@@ -8,6 +8,7 @@ import CustomDropDown from './dropdown';
 import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import {TIMEDATA, FLOORVALUE} from '../utility/constants';
+import {getDate} from '../utility/helper';
 
 export default function Header({
   navigation,
@@ -20,19 +21,6 @@ export default function Header({
 
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-
-  const getDate = input => {
-    let current = input;
-    return `${
-      parseInt(current.getDate(), 10) > 9
-        ? current.getDate()
-        : '0' + current.getDate()
-    }/${
-      parseInt(current.getMonth(), 10) > 9
-        ? current.getMonth()
-        : '0' + current.getMonth()
-    }/${current.getFullYear()}`;
-  };
 
   return (
     <View style={styles.rootcontainer}>
@@ -103,7 +91,7 @@ export default function Header({
             mode={'date'}
             onConfirm={item => {
               setDate(item);
-              selectDate(getDate(item));
+              selectDate(item);
               setOpen(false);
             }}
             onCancel={() => {
