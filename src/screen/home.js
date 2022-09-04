@@ -167,21 +167,21 @@ const HomeScreen = ({navigation}) => {
             setState={setTitle}
             placeholder={'Title'}
             top={'5%'}
-            icon={'envelope-o'}
+            icon={'quote-left'}
           />
           <Input
             state={faculty}
             setState={setFaculty}
             placeholder={'Faculty Name'}
             top={'5%'}
-            icon={'envelope-o'}
+            icon={'graduation-cap'}
           />
           <Input
             state={description}
             setState={setDescription}
             placeholder={'Description'}
             top={'5%'}
-            icon={'envelope-o'}
+            icon={'align-left'}
             multiline={true}
           />
         </View>
