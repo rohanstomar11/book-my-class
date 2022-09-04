@@ -105,7 +105,7 @@ export default function Header({
         <View style={styles.dateContainer}>
           <TouchableOpacity
             onPress={() => setOpen(true)}
-            activeOpacity={0.85}
+            activeOpacity={1}
             style={styles.dateinput}>
             <Text style={styles.datetext}>{getDate(date)}</Text>
           </TouchableOpacity>
@@ -116,6 +116,10 @@ export default function Header({
             date={date}
             mode={'date'}
             minimumDate={new Date()}
+            textColor={COLORS.primary}
+            dividerHeight={6}
+            androidVariant={'iosClone'}
+            maximumDate={new Date('2023-12-31')}
             onConfirm={item => {
               setDate(item);
               selectDate(item);
@@ -181,7 +185,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.primary,
     fontFamily: FONTS.SemiBold,
     paddingLeft: 10,

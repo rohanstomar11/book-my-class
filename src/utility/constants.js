@@ -164,11 +164,11 @@ export const FLOOR = {
 };
 
 export const TIMEDATA = [
-  {label: '10:00am-11:00am', value: '0'},
-  {label: '11:00am-12:00pm', value: '1'},
-  {label: '1:00pm-2:00pm', value: '2'},
-  {label: '2:00pm-3:00pm', value: '3'},
-  {label: '3:00pm-4:00pm', value: '4'},
+  {label: '10:00AM-11:00AM', value: '0'},
+  {label: '11:00AM-12:00PM', value: '1'},
+  {label: '01:00PM-02:00PM', value: '2'},
+  {label: '02:00PM-03:00PM', value: '3'},
+  {label: '03:00PM-04:00PM', value: '4'},
 ];
 
 export const FLOORVALUE = [

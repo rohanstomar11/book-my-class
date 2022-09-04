@@ -12,7 +12,6 @@ export default function ClassRoom({
   booked = false,
   select,
   disabled = false,
-  bookedModal,
   date,
   time,
   floor,
