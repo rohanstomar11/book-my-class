@@ -44,7 +44,9 @@ const HomeScreen = ({navigation}) => {
     setFloor(FLOOR[floorValue]);
     const subscribe = database()
       .ref(
-        `/bookings/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${floorValue}/${timeSlot}`,
+        `/bookings/${date.getFullYear()}/${(
+          parseInt(date.getMonth(), 10) + 1
+        ).toString()}/${date.getDate()}/${floorValue}/${timeSlot}`,
       )
       .on('value', snapshot => {
         setBookedRoom([]);
@@ -61,7 +63,9 @@ const HomeScreen = ({navigation}) => {
     return () =>
       database()
         .ref(
-          `/users/${`/bookings/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${floorValue}/0`}`,
+          `/users/${`/bookings/${date.getFullYear()}/${(
+            parseInt(date.getMonth(), 10) + 1
+          ).toString()}/${date.getDate()}/${floorValue}/0`}`,
         )
         .off('value', subscribe);
   }, [floorValue, timeSlot, date]);
@@ -234,7 +238,9 @@ const HomeScreen = ({navigation}) => {
             onPress={() => {
               database()
                 .ref(
-                  `/bookings/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${floorValue}/${timeSlot}/${selected}`,
+                  `/bookings/${date.getFullYear()}/${(
+                    parseInt(date.getMonth(), 10) + 1
+                  ).toString()}/${date.getDate()}/${floorValue}/${timeSlot}/${selected}`,
                 )
                 .set({
                   title: title,
