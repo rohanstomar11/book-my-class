@@ -20,11 +20,12 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {FONTS} from '../assets/fontFamily';
 import Input from '../component/input';
 import Lottie from 'lottie-react-native';
-
+import firestore from '@react-native-firebase/firestore';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {getDate} from '../utility/helper';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation, route}) => {
+  const email = route?.params?.email;
   const [floor, setFloor] = useState([]);
   const [selected, setSelected] = useState();
   const [isLoading, setisLoading] = useState(false);
@@ -36,9 +37,25 @@ const HomeScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
   const [faculty, setFaculty] = useState('');
   const [description, setDescription] = useState('');
+  const [bookingAccess, setbookingAccess] = useState(false);
 
   const booking = useRef();
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    firestore()
+      .collection('users')
+      .doc(email)
+      .get()
+      .then(
+        doc => {
+          setbookingAccess(doc.data().booking_access);
+        },
+        error => {
+          console.error(error);
+        },
+      );
+  }, [email]);
 
   useEffect(() => {
     setisLoading(true);
@@ -116,15 +133,17 @@ const HomeScreen = ({navigation}) => {
             })}
         </ScrollView>
       )}
-      <View style={styles.sticky}>
-        <View style={styles.btnContainer}>
-          <GradientButton
-            text={'BOOK ROOM'}
-            onPress={bookRoom}
-            disabled={selected ? false : true}
-          />
+      {bookingAccess && (
+        <View style={styles.sticky}>
+          <View style={styles.btnContainer}>
+            <GradientButton
+              text={'BOOK ROOM'}
+              onPress={bookRoom}
+              disabled={selected ? false : true}
+            />
+          </View>
         </View>
-      </View>
+      )}
 
       <RBSheet
         ref={booking}

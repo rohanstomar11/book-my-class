@@ -27,8 +27,8 @@ const Login = ({navigation}) => {
     }
     auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        navigation.replace('HomeScreen');
+      .then(response => {
+        navigation.replace('HomeScreen', {email: response.user.email});
       })
       .catch(error => {
         console.error(error);
