@@ -138,71 +138,27 @@ const HomeScreen = ({navigation}) => {
             borderColor: COLORS.primary,
           },
         }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '100%',
-            marginTop: '5%',
-            marginLeft: '5%',
-          }}>
-          <View
-            style={{
-              backgroundColor: COLORS.primary,
-              paddingVertical: 20,
-              paddingHorizontal: 16,
-              borderRadius: 100,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                fontFamily: FONTS.Bold,
-                color: COLORS.white,
-                fontSize: 30,
-                letterSpacing: 2,
-              }}>
-              {selected}
-            </Text>
+        <View style={styles.bookingModalContainer}>
+          <View style={styles.bookingModalTextContainer}>
+            <Text style={styles.bookingModalRoomNoText}>{selected}</Text>
           </View>
-          <View style={{flex: 1, justifyContent: 'center', marginLeft: '3%'}}>
-            <Text
-              style={{
-                fontFamily: FONTS.SemiBold,
-                color: COLORS.primary,
-                fontSize: 16,
-              }}>
-              02/08/2022
-            </Text>
-            <Text
-              style={{
-                fontFamily: FONTS.Medium,
-                color: COLORS.primary,
-                fontSize: 14,
-              }}>
-              {TIMEDATA[timeSlot]?.label}
-            </Text>
+          <View style={styles.dateTimeContainer}>
+            <Text style={styles.dateText}>02/08/2022</Text>
+            <Text style={styles.timeText}>{TIMEDATA[timeSlot]?.label}</Text>
           </View>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => booking.current.close()}
-            style={{flex: 1}}>
+            style={styles.flex}>
             <Icon
               name={'close'}
               size={30}
-              style={{
-                position: 'absolute',
-                right: '20%',
-                top: '-15%',
-                paddingVertical: 5,
-                paddingHorizontal: 8,
-                elevation: 16,
-                borderRadius: 20,
-              }}
+              style={styles.bookingModalClose}
               color={COLORS.red95}
             />
           </TouchableOpacity>
         </View>
-        <View style={{marginHorizontal: 16}}>
+        <View style={styles.marginH16}>
           <Input
             state={title}
             setState={setTitle}
@@ -226,13 +182,7 @@ const HomeScreen = ({navigation}) => {
             multiline={true}
           />
         </View>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 10,
-            width: '90%',
-            alignSelf: 'center',
-          }}>
+        <View style={styles.bookingModalRoomBtn}>
           <GradientButton
             text={'BOOK'}
             onPress={() => {
@@ -265,7 +215,7 @@ const HomeScreen = ({navigation}) => {
             autoPlay={true}
             source={require('../assets/lottie/success.json')}
             loop={false}
-            style={{position: 'absolute', backgroundColor: 'transparent'}}
+            style={styles.successLottie}
             onAnimationFinish={() => {
               setSuccess(false);
               booking.current.close();
@@ -312,6 +262,55 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 20,
     minHeight: 54,
+  },
+  bookingModalContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    marginTop: '5%',
+    marginLeft: '5%',
+  },
+  bookingModalTextContainer: {
+    backgroundColor: COLORS.primary,
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bookingModalRoomNoText: {
+    fontFamily: FONTS.Bold,
+    color: COLORS.white,
+    fontSize: 30,
+    letterSpacing: 2,
+  },
+  bookingModalRoomBtn: {
+    position: 'absolute',
+    bottom: 10,
+    width: '90%',
+    alignSelf: 'center',
+  },
+  marginH16: {marginHorizontal: 16},
+  flex: {flex: 1},
+  bookingModalClose: {
+    position: 'absolute',
+    right: '20%',
+    top: '-15%',
+    paddingVertical: 5,
+    paddingHorizontal: 8,
+    elevation: 16,
+    borderRadius: 20,
+  },
+  successLottie: {position: 'absolute', backgroundColor: 'transparent'},
+  dateTimeContainer: {flex: 1, justifyContent: 'center', marginLeft: '3%'},
+  dateText: {
+    fontFamily: FONTS.SemiBold,
+    color: COLORS.primary,
+    fontSize: 16,
+  },
+  timeText: {
+    fontFamily: FONTS.Medium,
+    color: COLORS.primary,
+    fontSize: 14,
   },
 });
 

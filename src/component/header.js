@@ -24,7 +24,6 @@ export default function Header({
   selectDate,
 }) {
   const [time, setTime] = useState(TIMEDATA[0]);
-  const [isFocus, setIsFocus] = useState(false);
 
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
@@ -66,7 +65,7 @@ export default function Header({
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <TouchableOpacity
-                  style={{flex: 1}}
+                  style={styles.flex}
                   onPress={() => {
                     auth()
                       .signOut()
@@ -87,7 +86,7 @@ export default function Header({
         </TouchableOpacity>
       </View>
 
-      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+      <View style={styles.centerRow}>
         <Dropdown
           style={styles.timeDropdown}
           placeholderStyle={styles.placeholderStyle}
@@ -97,12 +96,9 @@ export default function Header({
           labelField="label"
           valueField="value"
           value={time}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
           onChange={item => {
             setTimeSlot(item.value);
             setTime(item);
-            setIsFocus(false);
           }}
         />
 
@@ -220,4 +216,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.SemiBold,
     marginTop: '2%',
   },
+  centerRow: {flexDirection: 'row', justifyContent: 'center'},
+  flex: {flex: 1},
 });

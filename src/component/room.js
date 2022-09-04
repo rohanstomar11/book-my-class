@@ -27,9 +27,9 @@ export default function ClassRoom({
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <View style={{alignItems: 'flex-end'}}>
+              <View style={styles.flexEnd}>
                 <TouchableOpacity
-                  style={{activeOpacity: 0.9}}
+                  style={styles.op9}
                   onPress={() => setModalVisible(false)}>
                   <Icon
                     name="closecircle"
@@ -44,10 +44,10 @@ export default function ClassRoom({
                   <Text style={styles.circleText}>341</Text>
                 </TouchableOpacity>
                 <View style={styles.titleConatainer}>
-                  <View style={{alignItems: 'flex-end'}}>
+                  <View style={styles.flexEnd}>
                     <Text style={styles.titleText}>APP DEVELOPEMENT</Text>
                   </View>
-                  <View style={{alignItems: 'flex-end'}}>
+                  <View style={styles.flexEnd}>
                     <Text>Bhagyashree Dhakulkar</Text>
                   </View>
                 </View>
@@ -95,8 +95,7 @@ export default function ClassRoom({
       <Text
         style={[
           styles.roomNumText,
-          {fontFamily: selected ? FONTS.Bold : FONTS.Medium},
-          {fontSize: selected ? 16 : 15},
+          selected ? styles.selected : styles.notSelected,
           {
             color: booked
               ? COLORS.white
@@ -184,6 +183,16 @@ const styles = StyleSheet.create({
   },
   timeText: {
     color: COLORS.red,
+    fontFamily: FONTS.Medium,
+  },
+  flexEnd: {alignItems: 'flex-end'},
+  op9: {activeOpacity: 0.9},
+  selected: {
+    fontSize: 16,
+    fontFamily: FONTS.Bold,
+  },
+  notSelected: {
+    fontSize: 15,
     fontFamily: FONTS.Medium,
   },
 });
