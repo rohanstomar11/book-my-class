@@ -43,7 +43,7 @@ export default function ClassRoom({
                 <TouchableOpacity style={styles.circle}>
                   <Text style={styles.circleText}>341</Text>
                 </TouchableOpacity>
-                <View style={styles.titleConatainer}>
+                <View style={styles.titleContainer}>
                   <View style={styles.flexEnd}>
                     <Text style={styles.titleText}>APP DEVELOPEMENT</Text>
                   </View>
@@ -111,6 +111,9 @@ export default function ClassRoom({
 }
 
 const styles = StyleSheet.create({
+  createdView: {
+    width: '100%',
+  },
   classContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -164,10 +167,10 @@ const styles = StyleSheet.create({
   },
   circleText: {
     color: COLORS.white,
-    fontFamily: FONTS.Medium,
+    fontFamily: FONTS.Bold,
     fontSize: 28,
   },
-  titleConatainer: {
+  titleContainer: {
     justifyContent: 'center',
     marginHorizontal: 20,
     width: '75%',

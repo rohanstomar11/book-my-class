@@ -115,6 +115,7 @@ export default function Header({
             open={open}
             date={date}
             mode={'date'}
+            minimumDate={new Date()}
             onConfirm={item => {
               setDate(item);
               selectDate(item);

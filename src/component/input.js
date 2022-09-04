@@ -37,7 +37,7 @@ const Input = ({
         color={state === '' ? COLORS.hint : COLORS.primary}
       />
       <TextInput
-        style={styles.input}
+        style={[styles.input, multiline ? styles.multiline : {}]}
         keyboardType={keyboard}
         multiline={multiline}
         placeholder={placeholder}
@@ -85,6 +85,10 @@ const styles = StyleSheet.create({
   eye: {
     position: 'absolute',
     right: 12,
+  },
+  multiline: {
+    minHeight: 40,
+    maxHeight: 80,
   },
 });
 

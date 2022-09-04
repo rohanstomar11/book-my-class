@@ -22,6 +22,7 @@ import Input from '../component/input';
 import Lottie from 'lottie-react-native';
 
 import Icon from 'react-native-vector-icons/AntDesign';
+import {getDate} from '../utility/helper';
 
 const HomeScreen = ({navigation}) => {
   const [floor, setFloor] = useState([]);
@@ -143,7 +144,7 @@ const HomeScreen = ({navigation}) => {
             <Text style={styles.bookingModalRoomNoText}>{selected}</Text>
           </View>
           <View style={styles.dateTimeContainer}>
-            <Text style={styles.dateText}>02/08/2022</Text>
+            <Text style={styles.dateText}>{getDate(date)}</Text>
             <Text style={styles.timeText}>{TIMEDATA[timeSlot]?.label}</Text>
           </View>
           <TouchableOpacity
@@ -271,9 +272,9 @@ const styles = StyleSheet.create({
   },
   bookingModalTextContainer: {
     backgroundColor: COLORS.primary,
-    paddingVertical: 20,
-    paddingHorizontal: 16,
-    borderRadius: 100,
+    height: 80,
+    width: 80,
+    borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
