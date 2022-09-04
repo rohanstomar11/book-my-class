@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   View,
   ActivityIndicator,
-  Modal,
   Text,
   ScrollView,
   Dimensions,
@@ -21,7 +20,9 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {FONTS} from '../assets/fontFamily';
 import Input from '../component/input';
 import Lottie from 'lottie-react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+
+import Icon from 'react-native-vector-icons/AntDesign';
+import {getDate} from '../utility/helper';
 
 const HomeScreen = ({navigation}) => {
   const [floor, setFloor] = useState([]);
@@ -31,7 +32,6 @@ const HomeScreen = ({navigation}) => {
   const [floorValue, setfloorValue] = useState(0);
   const [timeSlot, setTimeSlot] = useState(0);
   const [date, setDate] = useState(new Date());
-  const [modalVisible, setModalVisible] = useState(false);
   const height = Dimensions.get('screen').height;
   const [title, setTitle] = useState('');
   const [faculty, setFaculty] = useState('');
@@ -45,7 +45,9 @@ const HomeScreen = ({navigation}) => {
     setFloor(FLOOR[floorValue]);
     const subscribe = database()
       .ref(
-        `/bookings/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${floorValue}/${timeSlot}`,
+        `/bookings/${date.getFullYear()}/${(
+          parseInt(date.getMonth(), 10) + 1
+        ).toString()}/${date.getDate()}/${floorValue}/${timeSlot}`,
       )
       .on('value', snapshot => {
         setBookedRoom([]);
@@ -62,7 +64,9 @@ const HomeScreen = ({navigation}) => {
     return () =>
       database()
         .ref(
-          `/users/${`/bookings/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${floorValue}/0`}`,
+          `/bookings/${date.getFullYear()}/${(
+            parseInt(date.getMonth(), 10) + 1
+          ).toString()}/${date.getDate()}/${floorValue}/${timeSlot}`,
         )
         .off('value', subscribe);
   }, [floorValue, timeSlot, date]);
@@ -76,7 +80,6 @@ const HomeScreen = ({navigation}) => {
   };
 
   const bookRoom = () => {
-    console.log('Book Room: ' + selected);
     booking.current.open();
   };
 
@@ -88,25 +91,6 @@ const HomeScreen = ({navigation}) => {
         setTimeSlot={setTimeSlot}
         selectDate={setDate}
       />
-
-      <View style={styles.CreatedView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>
-                This Lecure will be conducted by Prof.Bhagyashree Dhakulkar
-                Subj:{' '}
-              </Text>
-            </View>
-          </View>
-        </Modal>
-      </View>
 
       {isLoading && (
         <View style={styles.activityIndicator}>
@@ -124,6 +108,9 @@ const HomeScreen = ({navigation}) => {
                   select={selectingRoom}
                   disabled={selected === item ? false : selected ? true : false}
                   booked={bookedRoom.includes(item)}
+                  date={date}
+                  time={timeSlot}
+                  floor={floorValue}
                 />
               );
             })}
@@ -154,71 +141,27 @@ const HomeScreen = ({navigation}) => {
             borderColor: COLORS.primary,
           },
         }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '100%',
-            marginTop: '5%',
-            marginLeft: '5%',
-          }}>
-          <View
-            style={{
-              backgroundColor: COLORS.primary,
-              paddingVertical: 20,
-              paddingHorizontal: 16,
-              borderRadius: 100,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                fontFamily: FONTS.Bold,
-                color: COLORS.white,
-                fontSize: 30,
-                letterSpacing: 2,
-              }}>
-              {selected}
-            </Text>
+        <View style={styles.bookingModalContainer}>
+          <View style={styles.bookingModalTextContainer}>
+            <Text style={styles.bookingModalRoomNoText}>{selected}</Text>
           </View>
-          <View style={{flex: 1, justifyContent: 'center', marginLeft: '3%'}}>
-            <Text
-              style={{
-                fontFamily: FONTS.SemiBold,
-                color: COLORS.primary,
-                fontSize: 16,
-              }}>
-              02/08/2022
-            </Text>
-            <Text
-              style={{
-                fontFamily: FONTS.Medium,
-                color: COLORS.primary,
-                fontSize: 14,
-              }}>
-              {TIMEDATA[timeSlot]?.label}
-            </Text>
+          <View style={styles.dateTimeContainer}>
+            <Text style={styles.dateText}>{getDate(date)}</Text>
+            <Text style={styles.timeText}>{TIMEDATA[timeSlot]?.label}</Text>
           </View>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => booking.current.close()}
-            style={{flex: 1}}>
+            style={styles.flex}>
             <Icon
               name={'close'}
               size={30}
-              style={{
-                position: 'absolute',
-                right: '20%',
-                top: '-15%',
-                paddingVertical: 5,
-                paddingHorizontal: 8,
-                elevation: 16,
-                borderRadius: 20,
-              }}
+              style={styles.bookingModalClose}
               color={COLORS.red95}
             />
           </TouchableOpacity>
         </View>
-        <View style={{marginHorizontal: 16}}>
+        <View style={styles.marginH16}>
           <Input
             state={title}
             setState={setTitle}
@@ -242,19 +185,15 @@ const HomeScreen = ({navigation}) => {
             multiline={true}
           />
         </View>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 10,
-            width: '90%',
-            alignSelf: 'center',
-          }}>
+        <View style={styles.bookingModalRoomBtn}>
           <GradientButton
             text={'BOOK'}
             onPress={() => {
               database()
                 .ref(
-                  `/bookings/${date.getFullYear()}/${date.getMonth()}/${date.getDate()}/${floorValue}/${timeSlot}/${selected}`,
+                  `/bookings/${date.getFullYear()}/${(
+                    parseInt(date.getMonth(), 10) + 1
+                  ).toString()}/${date.getDate()}/${floorValue}/${timeSlot}/${selected}`,
                 )
                 .set({
                   title: title,
@@ -279,7 +218,7 @@ const HomeScreen = ({navigation}) => {
             autoPlay={true}
             source={require('../assets/lottie/success.json')}
             loop={false}
-            style={{position: 'absolute', backgroundColor: 'transparent'}}
+            style={styles.successLottie}
             onAnimationFinish={() => {
               setSuccess(false);
               booking.current.close();
@@ -298,65 +237,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     flex: 1,
   },
-  imagecontainer: {
-    flex: 1,
-  },
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 50,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    paddingBottom: 30,
-    paddingTop: 30,
-    paddingLeft: 100,
-    paddingRight: 100,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 1,
-  },
-  button: {
-    borderRadius: 10,
-    padding: 15,
-    elevation: 2,
-    marginBottom: 20,
-  },
   btnContainer: {
     width: '100%',
     paddingHorizontal: 16,
     flex: 1,
     justifyContent: 'flex-end',
     paddingBottom: '10%',
-  },
-  buttonOpen: {
-    backgroundColor: COLORS.secondary,
-    marginTop: 50,
-    marginLeft: 30,
-    marginRight: 30,
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'justify',
-  },
-  modalText: {
-    marginBottom: 30,
-    textAlign: 'justify',
-    color: 'black',
-    fontSize: 20,
   },
   activityIndicator: {
     flex: 1,
@@ -379,6 +265,55 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 20,
     minHeight: 54,
+  },
+  bookingModalContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    marginTop: '5%',
+    marginLeft: '5%',
+  },
+  bookingModalTextContainer: {
+    backgroundColor: COLORS.primary,
+    height: 80,
+    width: 80,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bookingModalRoomNoText: {
+    fontFamily: FONTS.Bold,
+    color: COLORS.white,
+    fontSize: 30,
+    letterSpacing: 2,
+  },
+  bookingModalRoomBtn: {
+    position: 'absolute',
+    bottom: 10,
+    width: '90%',
+    alignSelf: 'center',
+  },
+  marginH16: {marginHorizontal: 16},
+  flex: {flex: 1},
+  bookingModalClose: {
+    position: 'absolute',
+    right: '20%',
+    top: '-15%',
+    paddingVertical: 5,
+    paddingHorizontal: 8,
+    elevation: 16,
+    borderRadius: 20,
+  },
+  successLottie: {position: 'absolute', backgroundColor: 'transparent'},
+  dateTimeContainer: {flex: 1, justifyContent: 'center', marginLeft: '3%'},
+  dateText: {
+    fontFamily: FONTS.SemiBold,
+    color: COLORS.primary,
+    fontSize: 16,
+  },
+  timeText: {
+    fontFamily: FONTS.Medium,
+    color: COLORS.primary,
+    fontSize: 14,
   },
 });
 

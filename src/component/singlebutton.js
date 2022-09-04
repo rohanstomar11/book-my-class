@@ -14,7 +14,7 @@ const SingleButton = ({onPress, color, text, disabled = false}) => {
       style={[
         styles.container,
         {backgroundColor: color || COLORS.primary},
-        disabled ? {opacity: 0.7} : {opacity: 1},
+        disabled ? styles.op7 : {},
       ]}>
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.Bold,
     letterSpacing: 2,
   },
+  op7: {opacity: 0.7},
 });
 
 export default SingleButton;

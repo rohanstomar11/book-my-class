@@ -12,7 +12,7 @@ const GradientButton = ({onPress, colors, text, disabled = false}) => {
         onPress();
       }}
       disabled={disabled}
-      style={[styles.container, disabled ? {opacity: 0.5} : {}]}>
+      style={[styles.container, disabled ? styles.op5 : {}]}>
       <LinearGradient
         style={styles.gradientContainer}
         colors={colors || [COLORS.primary, COLORS.secondary]}
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.Bold,
     letterSpacing: 2,
   },
+  op5: {opacity: 0.5},
 });
 
 export default GradientButton;

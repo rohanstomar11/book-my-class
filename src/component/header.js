@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Image, TouchableOpacity, StyleSheet, Text} from 'react-native';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  Modal,
+} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {FONTS} from '../assets/fontFamily';
 import {COLORS} from '../assets/color';
@@ -17,10 +24,11 @@ export default function Header({
   selectDate,
 }) {
   const [time, setTime] = useState(TIMEDATA[0]);
-  const [isFocus, setIsFocus] = useState(false);
 
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.rootcontainer}>
@@ -37,27 +45,48 @@ export default function Header({
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
-            auth()
-              .signOut()
-              .then(
-                () => {
-                  navigation.replace('LoginScreen');
-                },
-                error => {
-                  console.error(error);
-                },
-              );
+            setModalVisible(true);
           }}>
           <Icon
             name="setting"
-            size={45}
+            size={40}
             color={COLORS.white}
             style={styles.user}
           />
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            statusBarTranslucent={true}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <TouchableOpacity
+                  style={styles.flex}
+                  onPress={() => {
+                    auth()
+                      .signOut()
+                      .then(
+                        () => {
+                          navigation.replace('LoginScreen');
+                        },
+                        error => {
+                          console.error(error);
+                        },
+                      );
+                  }}>
+                  <Text style={styles.logoutText}>Log Out</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </TouchableOpacity>
       </View>
 
-      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+      <View style={styles.centerRow}>
         <Dropdown
           style={styles.timeDropdown}
           placeholderStyle={styles.placeholderStyle}
@@ -67,12 +96,9 @@ export default function Header({
           labelField="label"
           valueField="value"
           value={time}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
           onChange={item => {
             setTimeSlot(item.value);
             setTime(item);
-            setIsFocus(false);
           }}
         />
 
@@ -89,6 +115,7 @@ export default function Header({
             open={open}
             date={date}
             mode={'date'}
+            minimumDate={new Date()}
             onConfirm={item => {
               setDate(item);
               selectDate(item);
@@ -124,6 +151,29 @@ const styles = StyleSheet.create({
     borderColor: COLORS.white,
     borderWidth: 0,
   },
+  centeredView: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalView: {
+    marginTop: '25%',
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    borderRadius: 8,
+    paddingVertical: 16,
+    elevation: 16,
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    width: '95%',
+    height: '8%',
+    alignItems: 'center',
+  },
+  logoutText: {
+    fontFamily: FONTS.Bold,
+    fontSize: 18,
+    color: COLORS.primary,
+    letterSpacing: 0.7,
+  },
   placeholderStyle: {
     fontSize: 16,
     color: COLORS.primary,
@@ -158,7 +208,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   user: {
-    marginRight: 3,
+    marginRight: '2%',
   },
   datetext: {
     fontSize: 16,
@@ -167,4 +217,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.SemiBold,
     marginTop: '2%',
   },
+  centerRow: {flexDirection: 'row', justifyContent: 'center'},
+  flex: {flex: 1},
 });

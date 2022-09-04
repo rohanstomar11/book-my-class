@@ -6,7 +6,6 @@ import {FONTS} from '../assets/fontFamily';
 
 export default function CustomDropDown({item, setfloorValue}) {
   const [value, setValue] = useState(item[0]);
-  const [isFocus, setIsFocus] = useState(false);
 
   return (
     <Dropdown
@@ -19,12 +18,9 @@ export default function CustomDropDown({item, setfloorValue}) {
       labelField="label"
       valueField="value"
       value={value}
-      onFocus={() => setIsFocus(true)}
-      onBlur={() => setIsFocus(false)}
       onChange={items => {
         setValue(items.value);
         setfloorValue(items.value);
-        setIsFocus(false);
       }}
     />
   );
