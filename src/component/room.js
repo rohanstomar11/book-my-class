@@ -1,8 +1,11 @@
 import {TouchableOpacity, Text, StyleSheet, View, Modal} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FONTS} from '../assets/fontFamily';
 import {COLORS} from '../assets/color';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {getDate} from '../utility/helper';
+import {TIMEDATA} from '../utility/constants';
+import database from '@react-native-firebase/database';
 
 export default function ClassRoom({
   classroomnum,
@@ -10,10 +13,35 @@ export default function ClassRoom({
   select,
   disabled = false,
   bookedModal,
+  date,
+  time,
+  floor,
 }) {
   const [selected, setSelected] = useState(false);
-
   const [modalVisible, setModalVisible] = useState(false);
+  const [details, setDetails] = useState({});
+
+  useEffect(() => {
+    const subscribe = database()
+      .ref(
+        `/bookings/${date.getFullYear()}/${(
+          parseInt(date.getMonth(), 10) + 1
+        ).toString()}/${date.getDate()}/${floor}/${time}/${classroomnum}`,
+      )
+      .on('value', snapshot => {
+        setDetails(snapshot.val());
+      });
+
+    return () => {
+      database()
+        .ref(
+          `/bookings/${date.getFullYear()}/${(
+            parseInt(date.getMonth(), 10) + 1
+          ).toString()}/${date.getDate()}/${floor}/${time}/${classroomnum}`,
+        )
+        .off('value', subscribe);
+    };
+  }, [floor, date, time, classroomnum]);
 
   const BookedModalCard = () => {
     return (
@@ -27,41 +55,36 @@ export default function ClassRoom({
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <View style={styles.flexEnd}>
-                <TouchableOpacity
-                  style={styles.op9}
-                  onPress={() => setModalVisible(false)}>
-                  <Icon
-                    name="closecircle"
-                    size={30}
-                    color={COLORS.red95}
-                    style={styles.user}
-                  />
-                </TouchableOpacity>
-              </View>
               <View style={styles.first}>
-                <TouchableOpacity style={styles.circle}>
-                  <Text style={styles.circleText}>341</Text>
-                </TouchableOpacity>
+                <View style={styles.circle}>
+                  <Text style={styles.circleText}>{classroomnum}</Text>
+                </View>
                 <View style={styles.titleContainer}>
-                  <View style={styles.flexEnd}>
-                    <Text style={styles.titleText}>APP DEVELOPEMENT</Text>
+                  <View>
+                    <Text style={styles.titleText}>{details?.title}</Text>
                   </View>
-                  <View style={styles.flexEnd}>
-                    <Text>Bhagyashree Dhakulkar</Text>
+                  <View>
+                    <Text style={styles.facultyText}>{details?.faculty}</Text>
                   </View>
                 </View>
               </View>
               <View style={styles.second}>
-                <Text style={styles.modalText}>
-                  This lecture is scheduled for android developement.Please come
-                  fast.
-                </Text>
+                <Text style={styles.modalText}>{details?.description}</Text>
               </View>
               <View style={styles.third}>
-                <Text style={styles.timeText}>02/09/22</Text>
-                <Text style={styles.timeText}>01:00PM - 02:00PM</Text>
+                <Text style={styles.dateText}>{getDate(date)}</Text>
+                <Text style={styles.timeText}>{TIMEDATA[time]?.label}</Text>
               </View>
+              <TouchableOpacity
+                style={styles.close}
+                onPress={() => setModalVisible(false)}>
+                <Icon
+                  name="closecircle"
+                  size={30}
+                  color={COLORS.hint}
+                  style={styles.user}
+                />
+              </TouchableOpacity>
             </View>
           </View>
         </Modal>
@@ -148,10 +171,10 @@ const styles = StyleSheet.create({
     borderColor: 'red',
   },
   modalText: {
-    marginTop: 10,
-    textAlign: 'justify',
-    color: 'black',
+    marginTop: '5%',
+    color: COLORS.text,
     fontSize: 20,
+    fontFamily: FONTS.Regular,
   },
   first: {
     flexDirection: 'row',
@@ -178,18 +201,33 @@ const styles = StyleSheet.create({
   titleText: {
     fontFamily: FONTS.Bold,
     color: COLORS.red,
-    fontSize: 20,
-    alignItems: 'flex-end',
+    fontSize: 24,
+  },
+  facultyText: {
+    fontFamily: FONTS.Regular,
+    fontSize: 14,
+    color: COLORS.text,
+    fontStyle: 'italic',
+    letterSpacing: 1,
   },
   third: {
     alignItems: 'flex-end',
+  },
+  dateText: {
+    color: COLORS.red,
+    fontFamily: FONTS.SemiBold,
+    fontSize: 18,
   },
   timeText: {
     color: COLORS.red,
     fontFamily: FONTS.Medium,
   },
   flexEnd: {alignItems: 'flex-end'},
-  op9: {activeOpacity: 0.9},
+  close: {
+    position: 'absolute',
+    right: '3%',
+    top: '5%',
+  },
   selected: {
     fontSize: 16,
     fontFamily: FONTS.Bold,

@@ -64,9 +64,9 @@ const HomeScreen = ({navigation}) => {
     return () =>
       database()
         .ref(
-          `/users/${`/bookings/${date.getFullYear()}/${(
+          `/bookings/${date.getFullYear()}/${(
             parseInt(date.getMonth(), 10) + 1
-          ).toString()}/${date.getDate()}/${floorValue}/0`}`,
+          ).toString()}/${date.getDate()}/${floorValue}/${timeSlot}`,
         )
         .off('value', subscribe);
   }, [floorValue, timeSlot, date]);
@@ -80,7 +80,6 @@ const HomeScreen = ({navigation}) => {
   };
 
   const bookRoom = () => {
-    console.log('Book Room: ' + selected);
     booking.current.open();
   };
 
@@ -109,6 +108,9 @@ const HomeScreen = ({navigation}) => {
                   select={selectingRoom}
                   disabled={selected === item ? false : selected ? true : false}
                   booked={bookedRoom.includes(item)}
+                  date={date}
+                  time={timeSlot}
+                  floor={floorValue}
                 />
               );
             })}
