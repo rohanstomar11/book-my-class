@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Image, TouchableOpacity, StyleSheet, Text} from 'react-native';
+import {View, Image, TouchableOpacity, StyleSheet, Text,Modal} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {FONTS} from '../assets/fontFamily';
 import {COLORS} from '../assets/color';
@@ -22,6 +22,8 @@ export default function Header({
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={styles.rootcontainer}>
       <View style={styles.firstcont}>
@@ -37,7 +39,38 @@ export default function Header({
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
-            auth()
+            // auth()
+            //   .signOut()
+            //   .then(
+            //     () => {
+            //       navigation.replace('LoginScreen');
+            //     },
+            //     error => {
+            //       console.error(error);
+            //     },
+            //   );
+            setModalVisible(true)
+          }}>
+          <Icon
+            name="setting"
+            size={45}
+            color={COLORS.white}
+            style={styles.user}
+            
+          />
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}>
+              <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <TouchableOpacity
+              onPress={()=>{
+              auth()
               .signOut()
               .then(
                 () => {
@@ -47,13 +80,13 @@ export default function Header({
                   console.error(error);
                 },
               );
-          }}>
-          <Icon
-            name="setting"
-            size={45}
-            color={COLORS.white}
-            style={styles.user}
-          />
+            }
+          }>
+            
+            <Text style={styles.logoutText}>Log Out</Text></TouchableOpacity>
+            </View>
+            </View>
+          </Modal>
         </TouchableOpacity>
       </View>
 
@@ -123,6 +156,31 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderColor: COLORS.white,
     borderWidth: 0,
+  },
+  centeredView: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    alignItems:'flex-end',
+  },
+  modalView: {
+    marginTop: 80,
+    marginLeft:20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingVertical:20,
+    elevation: 5,
+    borderWidth:1,
+    borderColor:COLORS.primary,
+    width:'100%',
+    alignItems:'center',
+    backgroundColor:'white'
+  },
+  logoutText:{
+    fontFamily:FONTS.Bold,
+    fontSize:18,
+    color:COLORS.primary,
+    letterSpacing:0.7,
+    
   },
   placeholderStyle: {
     fontSize: 16,
