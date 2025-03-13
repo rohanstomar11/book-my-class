@@ -119,7 +119,7 @@ export default function Header({
             textColor={COLORS.primary}
             dividerHeight={6}
             androidVariant={'iosClone'}
-            maximumDate={new Date('2023-12-31')}
+            maximumDate={new Date('2030-12-31')}
             onConfirm={item => {
               setDate(item);
               selectDate(item);
