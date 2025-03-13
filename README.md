@@ -53,4 +53,4 @@ npm run ios  # Builds and runs the app on iOS
 ```  
 
 ## 🎥 Demo  
-![App Demo](https://github.com/rohanstomar11/book-my-class/blob/master/demo/BookMyClass..gif)
+![App Demo](https://github.com/rohanstomar11/book-my-class/blob/master/demo/BookMyClass.gif)
